@@ -3,8 +3,8 @@ MXview Web API
 */
 var LOGIN_URL = '/goform/account/?uid=admin&pwd=moxa&action=login';
 var GETLICENSE = '/goform/license?action=get';
-var GETDEVICE_SUMMARY = '/goform/device?action=severity_summary&user_name=admin&password=';
-var GETLINK_SUMMARY = '/goform/link?action=severity_summary&user_name=admin&password=';
+var GETDEVICE_SUMMARY = '/goform/device?action=severity_summary&user_name=admin&password=moxa';
+var GETLINK_SUMMARY = '/goform/link?action=severity_summary&user_name=admin&password=moxa';
 
 
 /* MXviewCloud Restful API */
