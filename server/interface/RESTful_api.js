@@ -1,5 +1,7 @@
 var http_module = require('./../services/httpService.js');
 var mxview_web_url =  require('./web_api_url.js');
+var dashboard_db = require('./../api/dashboard/dashboard.model.js');
+
 var xmlParser = require('xml2js').parseString
 var Client = require('node-rest-client').Client;
 var client = new Client();
@@ -21,6 +23,26 @@ function process_NetworkStatusData(req, res) {
   var link_critical_count = 0;
   var link_warning_count = 0;
   var link_information_count = 0;
+
+   var dashbaord_json = {
+
+    "critical_count" : req.body.deviceCritical,
+    "warning_count" : req.body.deviceWarning,
+    "normal_count" : req.body.deviceNormal
+
+  }
+
+
+  var idashboardDB = new dashboard_db(dashbaord_json);
+
+  idashboardDB.save(function (err) {
+      if (err)
+        throw err;
+  });
+
+
+  idashboardDB.save(dashbaord_json);
+
 
   console.log('critical count =' + req.body.deviceCritical);
   console.log('warning count =' + req.body.deviceWarning);
