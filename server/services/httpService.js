@@ -60,7 +60,9 @@ module.exports =  {
                 console.log('problem with request: ' + e.message);
             });
 
-            REQ.write(postData);
+            if (request_type == 'POST')
+              REQ.write(postData);
+
             REQ.end();
         },
 

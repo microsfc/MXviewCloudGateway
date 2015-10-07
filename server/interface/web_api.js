@@ -10,6 +10,8 @@ var link_critical_count = 0;
 var link_warning_count = 0;
 var link_information_count = 0;
 
+var SEVERITY_TAG = 'Severity';
+
 module.exports = new web_api();
 
 web_api.prototype.register_MXviewData = register_MXviewData;
@@ -29,28 +31,45 @@ web_api.prototype.getdevice_summary = getdevice_summary;
         console.log('result='+result)
       }
 
-      xmlParser(link_summary_data, function(err, result) {
-        var linksummary_data = result;
-        link_critical_count = linksummary_data['Severity']['Critical']['Link'].length;
-        link_warning_count = linksummary_data['Severity']['Warning']['Link'].length;
-        link_information_count = linksummary_data['Severity']['Information']['Link'].length;
+      function isEmpty(obj) {
+        for(var prop in obj) {
+          if(obj.hasOwnProperty(prop))
+            return false;
+        }
 
-        var critical_count = device_critical_count + link_critical_count;
-        var warning_count = device_warning_count + link_warning_count;
-        var information_count = device_information_count + link_information_count;
+        return true;
+      }
 
-        var dashboard_data = {
-          "serverName": "MXview 1",
-          "deviceNormal": information_count,
-          "deviceWarning": warning_count,
-          "deviceCritical": critical_count
-        };
+      if(link_summary_data.indexOf(SEVERITY_TAG) > -1) {
+        xmlParser(link_summary_data, function (err, result) {
+          var linksummary_data = result;
+          if(isEmpty(linksummary_data['Severity']['Critical']['Link'])) {
+            link_critical_count = 0;
+            link_warning_count = 0;
+            link_information_count = 0;
+          }else {
+            link_critical_count = linksummary_data['Severity']['Critical']['Link'].length;
+            link_warning_count = linksummary_data['Severity']['Warning']['Link'].length;
+            link_information_count = linksummary_data['Severity']['Information']['Link'].length;
+          }
 
-        http_module.httpRequest('localhost', 3000, mxview_web_url.getNetworkStatusURL(), 'POST', '', dashboard_data, getNetworkStatusResult);
-      });
+          var critical_count = device_critical_count + link_critical_count;
+          var warning_count = device_warning_count + link_warning_count;
+          var information_count = device_information_count + link_information_count;
+
+          var dashboard_data = {
+            "serverName": "MXview 1",
+            "deviceNormal": information_count,
+            "deviceWarning": warning_count,
+            "deviceCritical": critical_count
+          };
+
+          http_module.httpRequest('localhost', 3000, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+        });
+      }
     }
 
-    http_module.httpsRequest(mxviewip, 443, mxview_web_url.getLinkSummary(), 'GET', '', process_linkSummary_data);
+    http_module.httpRequest(mxviewip, 8080, mxview_web_url.getLinkSummary(), 'GET', '', '',process_linkSummary_data);
   }
 
   function getdevice_summary(mxviewip) {
@@ -58,15 +77,17 @@ web_api.prototype.getdevice_summary = getdevice_summary;
     function process_deviceSummary_data(device_summary_data) {
       console.log('device summary data=' + device_summary_data);
 
-      xmlParser(device_summary_data, function(err, result) {
-        var devicesummary_data = result;
-        device_critical_count = devicesummary_data['Severity']['Critical'].length;
-        device_warning_count = devicesummary_data['Severity']['Warning'].length;
-        device_information_count = devicesummary_data['Severity']['Information'].length;
-      });
+      if(device_summary_data.indexOf(SEVERITY_TAG) > -1) {
+        xmlParser(device_summary_data, function (err, result) {
+          var devicesummary_data = result;
+          device_critical_count = devicesummary_data['Severity']['Critical'].length;
+          device_warning_count = devicesummary_data['Severity']['Warning'].length;
+          device_information_count = devicesummary_data['Severity']['Information'].length;
+        });
+      }
     }
 
-    http_module.httpsRequest(mxviewip, 443, mxview_web_url.getDeviceSummary(), 'GET', '', process_deviceSummary_data);
+    http_module.httpRequest(mxviewip, 8080, mxview_web_url.getDeviceSummary(), 'GET', '', '',process_deviceSummary_data);
 
 
   }
