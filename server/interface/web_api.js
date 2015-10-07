@@ -98,6 +98,9 @@ web_api.prototype.getdevice_summary = getdevice_summary;
 
               var dataString = JSON.stringify(register_data);
 
+              function get_http_push_data(result) {
+                console.log('http push data =' + result);
+              }
               //var args = {
                 //data:dataString,
                 //headers:{"Content-Type": "application/json"},
@@ -118,6 +121,8 @@ web_api.prototype.getdevice_summary = getdevice_summary;
               console.log('license=' + result.License.Item[0][License_Tag]);
               console.log(license_result);
               console.log('Done');
+
+              http_module.httpPushFromMXview(serverip, 8080, 'GET', hashcode, get_http_push_data);
 
             });
           }

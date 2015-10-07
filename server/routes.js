@@ -19,7 +19,7 @@ module.exports = function (app) {
       res.status(404).end();
     });
 
-  app.route('/register')
+  app.route('/reg')
       .get(RESTful.process_MXviewRegisterData)
       .post(RESTful.process_MXviewRegisterData);
 
