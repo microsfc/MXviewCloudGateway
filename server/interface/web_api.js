@@ -64,7 +64,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
             "deviceCritical": critical_count
           };
 
-          http_module.httpRequest('localhost', 3000, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+          http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
         });
       }
     }
@@ -136,7 +136,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
                 //console.log(response);
               //});
 
-              http_module.httpRequest('localhost', 3000, mxview_web_url.getReisterMXviewURL(), 'GET' +
+              http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getReisterMXviewURL(), 'GET' +
                 '', hashcode, dataString, get_register_result);
 
               console.log('license=' + result.License.Item[0][License_Tag]);
