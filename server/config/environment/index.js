@@ -7,7 +7,7 @@ var all = {
 
   env: process.env.NODE_ENV || 'development',
   root: path.normalize(__dirname + '/../../..'),
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 80,
 
   mongo: {
     options: {
