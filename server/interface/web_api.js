@@ -136,8 +136,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
                 //console.log(response);
               //});
 
-              http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getReisterMXviewURL(), 'GET' +
-                '', hashcode, dataString, get_register_result);
+              http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
 
               console.log('license=' + result.License.Item[0][License_Tag]);
               console.log(license_result);
