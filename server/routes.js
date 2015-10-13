@@ -7,6 +7,8 @@ var RESTful = require('./interface/RESTful_api.js');
 module.exports = function (app) {
 
   // API
+  app.use('/api/reg', require('./api/reg'));
+  app.use('/api/main-dashboards', require('./api/main-dashboard'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use('/api/users', require('./api/user'));
@@ -19,9 +21,9 @@ module.exports = function (app) {
       res.status(404).end();
     });
 
-  app.route('/reg')
+  /*app.route('/reg')
       .get(RESTful.process_MXviewRegisterData)
-      .post(RESTful.process_MXviewRegisterData);
+      .post(RESTful.process_MXviewRegisterData);*/
 
   app.route('/getNetworkStatus')
     .get(RESTful.process_NetworkStatusData)
@@ -29,6 +31,8 @@ module.exports = function (app) {
 
   app.route('/*')
     .get(function (req, res) {
+      console.log('redirect to home');
+
       res.sendFile(
         app.get('appPath') + '/index.html',
         { root: config.root }

@@ -1,9 +1,11 @@
 var http_module = require('./../services/httpService.js');
 var mxview_web_url =  require('./web_api_url.js');
 var xmlParser = require('xml2js').parseString;
+var config = require('./../config/environment');
+
 //var Client = require('node-rest-client').Client;
 //var client = new Client();
-var device_critical_count = 0;
+var device_warning_countdevice_critical_count = 0;
 var device_warning_count = 0;
 var device_information_count = 0;
 var link_critical_count = 0;
@@ -11,6 +13,7 @@ var link_warning_count = 0;
 var link_information_count = 0;
 
 var SEVERITY_TAG = 'Severity';
+var mxviewRegKey = '';
 
 module.exports = new web_api();
 
@@ -22,6 +25,15 @@ web_api.prototype.getdevice_summary = getdevice_summary;
 
   }
 
+  function isEmpty(obj) {
+    for(var prop in obj) {
+    if(obj.hasOwnProperty(prop))
+      return false;
+    }
+
+    return true;
+  }
+
   function getlink_summary(mxviewip) {
 
     function process_linkSummary_data(link_summary_data) {
@@ -29,15 +41,6 @@ web_api.prototype.getdevice_summary = getdevice_summary;
 
       function getNetworkStatusResult(result) {
         console.log('result='+result)
-      }
-
-      function isEmpty(obj) {
-        for(var prop in obj) {
-          if(obj.hasOwnProperty(prop))
-            return false;
-        }
-
-        return true;
       }
 
       if(link_summary_data.indexOf(SEVERITY_TAG) > -1) {
@@ -58,18 +61,18 @@ web_api.prototype.getdevice_summary = getdevice_summary;
           var information_count = device_information_count + link_information_count;
 
           var dashboard_data = {
-            "serverName": "MXview 1",
+            "regKey": mxviewRegKey,
             "deviceNormal": information_count,
             "deviceWarning": warning_count,
             "deviceCritical": critical_count
           };
 
-          http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+          http_module.httpRequest('localhost', 8080, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
         });
       }
     }
 
-    http_module.httpRequest(mxviewip, 8080, mxview_web_url.getLinkSummary(), 'GET', '', '',process_linkSummary_data);
+    http_module.httpRequest(mxviewip, config.mxview_port, mxview_web_url.getLinkSummary(), 'GET', '', '',process_linkSummary_data);
   }
 
   function getdevice_summary(mxviewip) {
@@ -80,14 +83,29 @@ web_api.prototype.getdevice_summary = getdevice_summary;
       if(device_summary_data.indexOf(SEVERITY_TAG) > -1) {
         xmlParser(device_summary_data, function (err, result) {
           var devicesummary_data = result;
-          device_critical_count = devicesummary_data['Severity']['Critical'].length;
-          device_warning_count = devicesummary_data['Severity']['Warning'].length;
-          device_information_count = devicesummary_data['Severity']['Information'].length;
+          if(isEmpty(devicesummary_data['Severity']['Critical']['0']['Device'])) {
+            device_critical_count = 0
+          }else {
+            device_critical_count = devicesummary_data['Severity']['Critical']['0']['Device'].length;
+          }
+
+          if(isEmpty(devicesummary_data['Severity']['Warning']['0']['Device'])) {
+            device_warning_count = 0
+          }else {
+            device_warning_count = devicesummary_data['Severity']['Warning']['0']['Device'].length;
+          }
+
+          if(isEmpty(devicesummary_data['Severity']['Information']['0']['Device'])) {
+            device_warning_count = 0
+          }else {
+            device_warning_count = devicesummary_data['Severity']['Information']['0']['Device'].length;
+          }
+
         });
       }
     }
 
-    http_module.httpRequest(mxviewip, 8080, mxview_web_url.getDeviceSummary(), 'GET', '', '',process_deviceSummary_data);
+    http_module.httpRequest(mxviewip, config.mxview_port, mxview_web_url.getDeviceSummary(), 'GET', '', '',process_deviceSummary_data);
 
 
   }
@@ -103,6 +121,12 @@ web_api.prototype.getdevice_summary = getdevice_summary;
 
         function get_register_result(result) {
           console.log('register result =' + result);
+          var obj = JSON.parse(result);
+          console.log('id=' +obj.regKey);
+          mxviewRegKey =  obj.regKey;
+          getdevice_summary(config.mxview_serverip);
+          getlink_summary(config.mxview_serverip);
+
         }
 
         function register_mxview_data_to_cloud(license_data) {
@@ -113,7 +137,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
               var license_result = JSON.stringify(result);
 
               var register_data = {
-                "servername": "MXview 1",
+                "serverName": "MXview 1",
                 "license": result.License.Item[0][License_Tag]
               };
 
@@ -136,19 +160,19 @@ web_api.prototype.getdevice_summary = getdevice_summary;
                 //console.log(response);
               //});
 
-              http_module.httpRequest('ec2-52-3-105-64.compute-1.amazonaws.com', 8080, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
+              http_module.httpRequest('localhost', 8080, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
 
               console.log('license=' + result.License.Item[0][License_Tag]);
               console.log(license_result);
               console.log('Done');
 
-              http_module.httpPushFromMXview(serverip, 8080, 'GET', hashcode, get_http_push_data);
+              http_module.httpPushFromMXview(serverip, config.mxview_port, 'GET', hashcode, get_http_push_data);
 
             });
           }
         }
 
-        http_module.httpsRequest(serverip, 443, mxview_web_url.getLicenseURL(), 'GET', hashcode, register_mxview_data_to_cloud);
+        http_module.httpsRequest(serverip, config.https_defaultport, mxview_web_url.getLicenseURL(), 'GET', hashcode, register_mxview_data_to_cloud);
       }
 
       function get_mxview_register_data(hashdata) {
@@ -161,7 +185,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
           }
       }
 
-      http_module.httpsRequest(serverip, 443, mxview_web_url.getLoginURL(), 'GET', '', get_mxview_register_data);
+      http_module.httpsRequest(serverip, config.https_defaultport, mxview_web_url.getLoginURL(), 'GET', '', get_mxview_register_data);
 
   }
 

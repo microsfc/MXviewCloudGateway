@@ -8,8 +8,9 @@ var GETLINK_SUMMARY = '/goform/link?action=severity_summary&user_name=admin&pass
 
 
 /* MXviewCloud Restful API */
-var REGISTER_MXVIEW_SITE = '/reg';
-var GETNETWORK_STATUS_URL = '/getNetworkStatus';
+var REGISTER_MXVIEW_SITE = '/api/reg';
+var GETNETWORK_STATUS_URL = '/api/main-dashboards';//'/api/setNetworkStatus';
+
 
 
 module.exports = new web_API_URL();
