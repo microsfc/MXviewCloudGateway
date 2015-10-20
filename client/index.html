@@ -17,6 +17,53 @@
     <!-- endinject -->
 
     <link rel="stylesheet" href="styles/css/app.css">
+    <link rel="stylesheet" href="styles/css/bootstrap.css">
+
+    <!-- build:js app.js -->
+
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-socket-io/socket.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    <script src="views/googlemap/googlemap.js"></script>
+    <script src="views/googlemap/googlemap.controller.js"></script>
+    <script src="views/signup/signup.js"></script>
+    <script src="views/signup/signup.controller.js"></script>
+    <script src="views/login/login.js"></script>
+    <script src="views/login/login.controller.js"></script>
+    <script src="views/home/home.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="services/socket/socket.service.js"></script>
+    <script src="services/socket/socket.mock.js"></script>
+    <script src="services/-dashboard/-dashboard.resource.js"></script>
+    <script src="services/main-dashboard/main-dashboard.resource.js"></script>
+    <script src="services/auth/auth.js"></script>
+    <script src="services/reg/reg.resource.js"></script>
+    <script src="directives/smart-table/smarttable.controller.js"></script>
+    <script src="directives/nav-bar/nav-bar.directive.js"></script>
+    <script src="directives/smart-table/smart-table.directive.js"></script>
+    <!-- endinject -->
+
+    <!-- <smart-table></smart-table> -->
+
+    <!-- endbuild -->
+
+    <!-- <script src="http://localhost:35729/livereload.js?snipver=1"></script> -->
 
     <!-- endbuild -->
 
@@ -27,43 +74,40 @@
 
     <nav-bar></nav-bar>
 
-    <div ng-view></div>
+    <!-- <div ng-view></div> -->
 
-    <script src="socket.io/socket.io.js"></script>
-
-    <!-- build:js app.js -->
-
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-socket-io/socket.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
-    <!-- endinject -->
-
-    <!-- inject:js -->
-    <script src="app.js"></script>
-    <script src="views/googlemap/googlemap.js"></script>
-    <script src="views/googlemap/googlemap.controller.js"></script>
-    <script src="views/home/home.js"></script>
-    <script src="views/home/home.controller.js"></script>
-    <script src="views/login/login.js"></script>
-    <script src="views/login/login.controller.js"></script>
-    <script src="views/signup/signup.js"></script>
-    <script src="views/signup/signup.controller.js"></script>
-    <script src="services/socket/socket.service.js"></script>
-    <script src="services/socket/socket.mock.js"></script>
-    <script src="services/auth/auth.js"></script>
-    <script src="directives/nav-bar/nav-bar.directive.js"></script>
-    <!-- endinject -->
-
-    <!-- endbuild -->
-
-    <script src="http://localhost:35729/livereload.js?snipver=1"></script>
-
+    <div ng-controller="SmartTableCtrl">
+      <button type="button" ng-click="addRandomItem(row)" class="btn btn-sm btn-success">
+        <i class="glyphicon glyphicon-plus">
+        </i> Add random item
+      </button>
+      <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
+        <thead>
+        <tr>
+          <th st-sort="firstName">first name</th>
+          <th st-sort="lastName">last name</th>
+          <th st-sort="birthDate">birth date</th>
+          <th st-sort="balance">balance</th>
+        </tr>
+        <tr>
+          <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="row in displayedCollection">
+          <td>{{row.firstName}}</td>
+          <td>{{row.lastName}}</td>
+          <td>{{row.birthDate}}</td>
+          <td>{{row.balance}}</td>
+          <td>
+            <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+              <i class="glyphicon glyphicon-remove-circle">
+              </i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
