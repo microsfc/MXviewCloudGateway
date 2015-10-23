@@ -124,8 +124,8 @@ web_api.prototype.getdevice_summary = getdevice_summary;
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
-          getdevice_summary(config.mxview_serverip);
-          getlink_summary(config.mxview_serverip);
+          //getdevice_summary(config.mxview_serverip);
+          //getlink_summary(config.mxview_serverip);
 
         }
 
@@ -166,7 +166,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
               console.log(license_result);
               console.log('Done');
 
-              http_module.httpPushFromMXview(serverip, config.mxview_port, 'GET', hashcode, get_http_push_data);
+              //http_module.httpPushFromMXview(serverip, config.mxview_port, 'GET', hashcode, get_http_push_data);
 
             });
           }

@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('mxviewCloud')
-  .controller('SmartTableCtrl', ['$scope', 'Socket', function ($scope, socketio) {
+  .controller('SmartTableCtrl', ['$scope', 'Socket', function ($scope, Socket) {
 
     //var vm = this;
 
@@ -16,25 +16,25 @@ angular.module('mxviewCloud')
 
     $scope.rowCollection = [];
 
-    socketio.on('connect', function(){
+    Socket.on('connect', function(){
       $scope.title = 'connected';
     });
 
-    socketio.on('user connected', function(msg){
+    Socket.on('user connected', function(msg){
       $scope.promo = msg;
     });
 
-    socketio.on('mxviewcloud dashbaord', function(msg){
+    Socket.on('mxviewcloud dashbaord', function(msg){
       $scope.promo = msg;
       var mxregister_data = JSON.parse(msg);
       for(var myKey in mxregister_data){
-        if(mxregister_data.hasOwnProperty('servername')) {
+        //if(mxregister_data.hasOwnProperty('deviceNormal')) {
           MXviewSiteName[0] = mxregister_data[myKey];
 
           $scope.rowCollection[0].sitename = mxregister_data[myKey];
 
           $scope.displayedCollection = $scope.rowCollection;
-        }
+        //}
       }
 
       mxregister_data.forEach(function(site) {
