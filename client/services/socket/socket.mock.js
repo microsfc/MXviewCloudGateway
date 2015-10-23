@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('mxviewCloud')
-  .factory('Socket', function () {
+  .factory('Socket', function (socketFactory) {
+    var socket = socketFactory();
+    socket.forward('broadcast');
+    return socket;
+  });
+
+  /*.factory('Socket', function () {
 
     return {
       socket: {
@@ -17,4 +23,4 @@ angular.module('mxviewCloud')
       unsyncModel: angular.noop
     };
 
-  });
+  });*/
