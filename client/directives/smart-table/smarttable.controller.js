@@ -28,10 +28,10 @@ angular.module('mxviewCloud')
       $scope.promo = msg;
       var mxregister_data = JSON.parse(msg);
       for(var myKey in mxregister_data){
-        //if(mxregister_data.hasOwnProperty('deviceNormal')) {
-          MXviewSiteName[0] = mxregister_data[myKey];
+        //if(mxregister_data.hasOwnProperty('serverName')) {
+         // MXviewSiteName[0] = mxregister_data[1]['serverName'];
 
-          $scope.rowCollection[0].sitename = mxregister_data[myKey];
+          $scope.rowCollection[0].sitename = mxregister_data[1]['serverName'];
 
           $scope.displayedCollection = $scope.rowCollection;
         //}

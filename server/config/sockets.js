@@ -11,6 +11,7 @@ module.exports = function (io) {
     function get_register_result(result) {
       socket.emit('mxviewcloud dashbaord', result);
     }
+
     socket.connectDate = new Date();
     socket.ip = (socket.handshake.address) ? socket.handshake.address : null;
 
