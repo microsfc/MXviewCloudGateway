@@ -5,16 +5,25 @@ var regData = require('../reg/reg.model');
 
 
 var mxview_RegisterData;
+var mxview_eventCountData;
 
 module.exports =  {
 
   getRegisterData: function(callback) {
-    /*MainDashboard.find(function (err, data) {
-      mxview_RegisterData = JSON.stringify(data);
-      callback(mxview_RegisterData);
-    });*/
+    MainDashboard.find(function (err, data) {
+      mxview_eventCountData = data ; //JSON.stringify(data);
+      //callback(mxview_RegisterData);
+    });
+
     regData.find(function (err, data) {
-      mxview_RegisterData = JSON.stringify(data);
+      var dashbaord_data = {
+        "serverName" :data[1]['serverName'],
+        "deviceNormal" :mxview_eventCountData[0]['deviceNormal'],
+        "deviceWarning" :mxview_eventCountData[0]['deviceWarning'],
+        "deviceCritical" :mxview_eventCountData[0]['deviceCritical']
+      };
+
+      mxview_RegisterData = JSON.stringify(dashbaord_data);
       callback(mxview_RegisterData);
     });
   }
