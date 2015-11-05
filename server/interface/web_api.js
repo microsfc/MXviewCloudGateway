@@ -124,8 +124,8 @@ web_api.prototype.getdevice_summary = getdevice_summary;
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
-          //getdevice_summary(config.mxview_serverip);
-          //getlink_summary(config.mxview_serverip);
+          getdevice_summary(config.mxview_serverip);
+          getlink_summary(config.mxview_serverip);
 
         }
 
