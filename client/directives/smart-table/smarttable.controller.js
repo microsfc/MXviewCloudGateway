@@ -31,10 +31,10 @@ angular.module('mxviewCloud')
         //if(mxregister_data.hasOwnProperty('serverName')) {
          // MXviewSiteName[0] = mxregister_data[1]['serverName'];
 
-          $scope.rowCollection[0].sitename = mxregister_data[0]['serverName'];
-          $scope.rowCollection[0].informationEvent = mxregister_data[0]['deviceNormal'];
-          $scope.rowCollection[0].criticalEvent = mxregister_data[0]['deviceCritical'];
-          $scope.rowCollection[0].warningEvent = mxregister_data[0]['deviceWarning'];
+          $scope.rowCollection[0].sitename = mxregister_data['serverName'];
+          $scope.rowCollection[0].informationEvent = mxregister_data['deviceNormal'];
+          $scope.rowCollection[0].criticalEvent = mxregister_data['deviceCritical'];
+          $scope.rowCollection[0].warningEvent = mxregister_data['deviceWarning'];
 
           $scope.displayedCollection = $scope.rowCollection;
         //}
