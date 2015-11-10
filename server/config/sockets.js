@@ -28,6 +28,10 @@ module.exports = function (io) {
     dashboardController.getRegisterData(get_register_result);
 
 
+    /*setInterval(function() {
+      socket.emit('dashbaord realtime data', {'date': new Date()});
+    }, 1000);*/
+
     socket.on('message', function (from, msg) {
 
       console.log('recieved message from', from, 'msg', JSON.stringify(msg));

@@ -1,7 +1,8 @@
 var http_module = require('./../services/httpService.js');
 var mxview_web_url =  require('./web_api_url.js');
-var xmlParser = require('xml2js').parseString;
 var config = require('./../config/environment');
+var mqTopic = require('./mqTopic.js');
+var xmlParser = require('xml2js').parseString;
 
 //var Client = require('node-rest-client').Client;
 //var client = new Client();
@@ -12,6 +13,8 @@ var link_critical_count = 0;
 var link_warning_count = 0;
 var link_information_count = 0;
 
+var topicObj = new mqTopic();
+
 var SEVERITY_TAG = 'Severity';
 var mxviewRegKey = '';
 
@@ -20,6 +23,7 @@ module.exports = new web_api();
 web_api.prototype.register_MXviewData = register_MXviewData;
 web_api.prototype.getlink_summary = getlink_summary;
 web_api.prototype.getdevice_summary = getdevice_summary;
+web_api.prototype.subscribeMQTT = subscribeMQTT;
 
   function web_api() {
 
@@ -32,6 +36,11 @@ web_api.prototype.getdevice_summary = getdevice_summary;
     }
 
     return true;
+  }
+
+  function subscribeMQTT(brokerip, subscribe_topic, socket) {
+    var mqtt_client = require('./mqtt_subscriber.js')(brokerip, socket);
+    mqtt_client.subscribe(subscribe_topic)
   }
 
   function getlink_summary(mxviewip) {
@@ -124,14 +133,14 @@ web_api.prototype.getdevice_summary = getdevice_summary;
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
-          getdevice_summary(config.mxview_serverip);
-          getlink_summary(config.mxview_serverip);
+          //getdevice_summary(config.mxview_serverip);
+          //getlink_summary(config.mxview_serverip);
 
         }
 
         function register_mxview_data_to_cloud(license_data) {
           if (license_data.indexOf(License_Tag) > -1) {
-            //var mqtt_client = require('./mqtt_client.js')('ec2-52-3-105-64.compute-1.amazonaws.com');
+            var mqtt_client = require('./mqtt_publisher.js')('ec2-52-3-105-64.compute-1.amazonaws.com');
             console.log('json result');
             xmlParser(license_data, function (err, result) {
               var license_result = JSON.stringify(result);
@@ -143,14 +152,20 @@ web_api.prototype.getdevice_summary = getdevice_summary;
 
               var dataString = JSON.stringify(register_data);
 
-              function get_http_push_data(result) {
-                console.log('http push data =' + result);
+              function get_http_push_data(pushdata) {
+                console.log('http push data =' + pushdata);
+                mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), pushdata);
+                /*console.log('http push data =' + pushdata);
+                xmlParser(pushdata, function (err, result) {
+                  var push_data = result;
+                  mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), 'test');
+                  //mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(push_data));
+                });*/
               }
               //var args = {
                 //data:dataString,
                 //headers:{"Content-Type": "application/json"},
               //};
-              //mqtt_client.publish(topicObj.getRegisterMXviewTopic(), JSON.stringify(register_data));
 
               //client.post(mxview_web_url.getReisterMXviewURL(), args, function(data, response) {
               //client.post('http://127.0.0.1:3000/register', args, function(data, response) {
@@ -166,7 +181,7 @@ web_api.prototype.getdevice_summary = getdevice_summary;
               console.log(license_result);
               console.log('Done');
 
-              //http_module.httpPushFromMXview(serverip, config.mxview_port, 'GET', hashcode, get_http_push_data);
+              http_module.httpPushFromMXview(serverip, config.mxview_port, 'GET', hashcode, get_http_push_data);
 
             });
           }
