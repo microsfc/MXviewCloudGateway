@@ -79,7 +79,7 @@ server.listen(config.port, config.ip, function () {
     require('ripe').ready();
   }
 
-  require('./main')(app,config.mxview_serverip);
+  require('./main')(app,config.mxview_serverip, socket);
 
 });
 

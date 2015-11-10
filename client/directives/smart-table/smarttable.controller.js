@@ -40,8 +40,8 @@ angular.module('mxviewCloud')
         //}
       }
 
-      mxregister_data.forEach(function(site) {
-        console.log('test');
+      mxregister_data.forEach(function(item, index) {
+        console.log("result="+mxregister_data[index]);
       })
     });
 
