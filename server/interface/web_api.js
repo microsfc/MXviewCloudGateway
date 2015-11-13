@@ -133,8 +133,8 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
-          //getdevice_summary(config.mxview_serverip);
-          //getlink_summary(config.mxview_serverip);
+          getdevice_summary(config.mxview_serverip);
+          getlink_summary(config.mxview_serverip);
 
         }
 
@@ -154,13 +154,53 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
 
               function get_http_push_data(pushdata) {
                 console.log('http push data =' + pushdata);
-                mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), pushdata);
-                /*console.log('http push data =' + pushdata);
-                xmlParser(pushdata, function (err, result) {
+
+                var contain_index = pushdata.indexOf("<Trigger_Detail>");
+                var parsing_data = pushdata.substring(contain_index, pushdata.length);
+                xmlParser(parsing_data, function (err, result) {
                   var push_data = result;
-                  mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), 'test');
-                  //mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(push_data));
-                });*/
+                  var event_type = 0;
+                  var critical_count = 0;
+                  var information_count = 0;
+                  var warning_count = 0;
+
+                  if(!isEmpty(push_data)){
+
+                    if(!isEmpty(push_data['Trigger_Detail'])) {
+                      if(isEmpty(push_data['Trigger_Detail']['Event'])) {
+                        critical_count = 0;
+                      }else {
+
+                        event_type =  push_data.Trigger_Detail.Event[0].Severity; //push_data['Trigger_Detail']['Event']['0']['Severity'];
+                        switch (event_type[0]) {
+                          case '0':
+                                 information_count++;
+                                 break;
+                          case '1':
+                                 warning_count++;
+                                 break;
+                          case '2':
+                                 critical_count++;
+                                 break;
+
+                        }
+
+                        var dynamic_dashbaord_data = {
+                          'critical_count':critical_count,
+                          'warning_count':warning_count,
+                          'information_count':information_count
+                        };
+
+                        mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
+
+                      }
+                    }
+
+                  }
+                });
+
+                //mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), pushdata);
+
               }
               //var args = {
                 //data:dataString,

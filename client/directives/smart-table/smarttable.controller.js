@@ -24,6 +24,16 @@ angular.module('mxviewCloud')
       $scope.promo = msg;
     });
 
+    Socket.on('mxviewcloud trigger_data', function (msg) {
+      console.log('trigger_data=' + msg);
+      var update_data = JSON.parse(msg);
+      $scope.rowCollection[0].informationEvent = update_data['information_count'];
+      $scope.rowCollection[0].criticalEvent = update_data['critical_count'];
+      $scope.rowCollection[0].warningEvent = update_data['warning_count'];
+
+      $scope.displayedCollection = $scope.rowCollection;
+    });
+
     Socket.on('mxviewcloud dashbaord', function(msg){
       $scope.promo = msg;
       var mxregister_data = JSON.parse(msg);
