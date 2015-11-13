@@ -42,7 +42,7 @@ module.exports = function(broker_ip, socket){
     socket.on('connection', function(socket) {
       setInterval(function() {
         if(g_message.length > 0){
-          socket.emit('mxviewcloud dashbaord', g_message);
+          socket.emit('mxviewcloud trigger_data', g_message);
         }
       }, 1000);
     });
