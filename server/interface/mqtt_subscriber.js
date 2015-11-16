@@ -43,6 +43,7 @@ module.exports = function(broker_ip, socket){
       setInterval(function() {
         if(g_message.length > 0){
           socket.emit('mxviewcloud trigger_data', g_message);
+          g_message = '';
         }
       }, 1000);
     });

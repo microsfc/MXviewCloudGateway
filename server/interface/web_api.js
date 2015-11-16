@@ -171,18 +171,20 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
                         critical_count = 0;
                       }else {
 
-                        event_type =  push_data.Trigger_Detail.Event[0].Severity; //push_data['Trigger_Detail']['Event']['0']['Severity'];
-                        switch (event_type[0]) {
-                          case '0':
-                                 information_count++;
-                                 break;
-                          case '1':
-                                 warning_count++;
-                                 break;
-                          case '2':
-                                 critical_count++;
-                                 break;
+                        for(var i=0; i<push_data.Trigger_Detail.Event.length; i++){
+                          event_type =  push_data.Trigger_Detail.Event[0].Severity; //push_data['Trigger_Detail']['Event']['0']['Severity'];
+                          switch (event_type[0]) {
+                            case '0':
+                              information_count++;
+                              break;
+                            case '1':
+                              warning_count++;
+                              break;
+                            case '2':
+                              critical_count++;
+                              break;
 
+                          }
                         }
 
                         var dynamic_dashbaord_data = {
