@@ -13,7 +13,7 @@ var socket = require('socket.io')(server, { serveClient: true });
 require('./config/sockets.js')(socket);
 
 require('./config/express')(app);
-require('./routes')(app,config.mxview_serverip);
+require('./routes')(app,config.mxview_server_ip);
 
 
 /*var restify = require('restify')
@@ -79,7 +79,7 @@ server.listen(config.port, config.ip, function () {
     require('ripe').ready();
   }
 
-  require('./main')(app,config.mxview_serverip, socket);
+  require('./main')(app,config.mxview_server_ip, socket);
 
 });
 
