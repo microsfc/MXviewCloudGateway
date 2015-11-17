@@ -6,7 +6,7 @@ var xmlParser = require('xml2js').parseString;
 
 //var Client = require('node-rest-client').Client;
 //var client = new Client();
-var device_warning_countdevice_critical_count = 0;
+var device_critical_count = 0;
 var device_warning_count = 0;
 var device_information_count = 0;
 var link_critical_count = 0;
@@ -105,9 +105,9 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
           }
 
           if(isEmpty(devicesummary_data['Severity']['Information']['0']['Device'])) {
-            device_warning_count = 0
+            device_information_count = 0
           }else {
-            device_warning_count = devicesummary_data['Severity']['Information']['0']['Device'].length;
+            device_information_count = devicesummary_data['Severity']['Information']['0']['Device'].length;
           }
 
         });
@@ -168,23 +168,27 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
 
                     if(!isEmpty(push_data['Trigger_Detail'])) {
                       if(isEmpty(push_data['Trigger_Detail']['Event'])) {
-                        critical_count = 0;
+                        console.log('not find dashboard trigger data')
                       }else {
 
                         for(var i=0; i<push_data.Trigger_Detail.Event.length; i++){
-                          event_type =  push_data.Trigger_Detail.Event[0].Severity; //push_data['Trigger_Detail']['Event']['0']['Severity'];
-                          switch (event_type[0]) {
-                            case '0':
-                              information_count++;
-                              break;
-                            case '1':
-                              warning_count++;
-                              break;
-                            case '2':
-                              critical_count++;
-                              break;
 
+                          for(var j=0; j<push_data.Trigger_Detail.Event[i].Severity.length; j++) {
+                            event_type =  push_data.Trigger_Detail.Event[i].Severity[j]; //push_data['Trigger_Detail']['Event']['0']['Severity'];
+                            switch (event_type) {
+                              case '0':
+                                information_count++;
+                                break;
+                              case '1':
+                                warning_count++;
+                                break;
+                              case '2':
+                                critical_count++;
+                                break;
+
+                            }
                           }
+
                         }
 
                         var dynamic_dashbaord_data = {
