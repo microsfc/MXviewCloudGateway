@@ -1,6 +1,5 @@
 node_modules/
 client/styles/css
 .idea/
-dist/
 .sass-cache/
 docs/
