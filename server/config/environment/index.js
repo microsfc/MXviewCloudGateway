@@ -21,11 +21,17 @@ var all = {
     session: process.env.SESSION_SECRET || 'secretKey'
   },
 
-  mxview_serverip: '192.168.127.68',
+  mxview_server_ip: '192.168.127.68',
 
   mxview_port: 8080,
 
-  https_defaultport : 443
+  https_defaultport : 443,
+
+  mqtt_broker_ip: 'ec2-52-3-105-64.compute-1.amazonaws.com',
+
+  mxview_cloud_server_ip: 'localhost', //'192.168.2.21',
+
+  mxview_cloud_server_port: 8080
 };
 
 module.exports = _.merge(all, require('./' + all.env + '.js'));

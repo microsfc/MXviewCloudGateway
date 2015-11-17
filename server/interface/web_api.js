@@ -76,7 +76,7 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
             "deviceCritical": critical_count
           };
 
-          http_module.httpRequest('localhost', 8080, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+          http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
         });
       }
     }
@@ -133,14 +133,14 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
-          getdevice_summary(config.mxview_serverip);
-          getlink_summary(config.mxview_serverip);
+          getdevice_summary(config.mxview_server_ip);
+          getlink_summary(config.mxview_server_ip);
 
         }
 
         function register_mxview_data_to_cloud(license_data) {
           if (license_data.indexOf(License_Tag) > -1) {
-            var mqtt_client = require('./mqtt_publisher.js')('ec2-52-3-105-64.compute-1.amazonaws.com');
+            var mqtt_client = require('./mqtt_publisher.js')(config.mqtt_broker_ip);
             console.log('json result');
             xmlParser(license_data, function (err, result) {
               var license_result = JSON.stringify(result);
@@ -221,7 +221,7 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
                 //console.log(response);
               //});
 
-              http_module.httpRequest('localhost', 8080, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
+              http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
 
               console.log('license=' + result.License.Item[0][License_Tag]);
               console.log(license_result);
