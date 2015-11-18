@@ -27,7 +27,7 @@ module.exports =  {
     //regData.findOne({}, {}, { sort: {'create_at':-1} }, function (err, data) {
     regData.find(function (err, data) {
       var dashbaord_data = {
-        "serverName" :data[1]['serverName'],
+        "serverName" :data['0']['serverName'],
         "deviceNormal" :mxview_eventCountData['0']['deviceNormal'],
         "deviceWarning" :mxview_eventCountData['0']['deviceWarning'],
         "deviceCritical" :mxview_eventCountData['0']['deviceCritical']
