@@ -1,0 +1,346 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'mongoose-auto-increment' ]
+2 info using npm@2.7.4
+3 info using node@v0.12.2
+4 warn package.json mxviewCloud@0.1.0 No description
+5 warn package.json mxviewCloud@0.1.0 No repository field.
+6 verbose install mongoose-auto-increment is installed as 5.0.1
+7 silly cache add args [ 'mongoose-auto-increment', null ]
+8 verbose cache add spec mongoose-auto-increment
+9 silly cache add parsed spec { raw: 'mongoose-auto-increment',
+9 silly cache add   scope: null,
+9 silly cache add   name: 'mongoose-auto-increment',
+9 silly cache add   rawSpec: '',
+9 silly cache add   spec: '*',
+9 silly cache add   type: 'range' }
+10 verbose addNamed mongoose-auto-increment@*
+11 silly addNamed semver.valid null
+12 silly addNamed semver.validRange *
+13 silly addNameRange { name: 'mongoose-auto-increment', range: '*', hasData: false }
+14 silly mapToRegistry name mongoose-auto-increment
+15 silly mapToRegistry using default registry
+16 silly mapToRegistry registry https://registry.npmjs.org/
+17 silly mapToRegistry uri https://registry.npmjs.org/mongoose-auto-increment
+18 verbose addNameRange registry:https://registry.npmjs.org/mongoose-auto-increment not in flight; fetching
+19 verbose request uri https://registry.npmjs.org/mongoose-auto-increment
+20 verbose request no auth needed
+21 info attempt registry request try #1 at 2:52:05 PM
+22 verbose request id 4811bca7bff5e134
+23 verbose etag "39JXL4NW5FAXTHSTASEIDPSM7"
+24 http request GET https://registry.npmjs.org/mongoose-auto-increment
+25 http 304 https://registry.npmjs.org/mongoose-auto-increment
+26 silly get cb [ 304,
+26 silly get   { date: 'Thu, 19 Nov 2015 06:52:05 GMT',
+26 silly get     via: '1.1 varnish',
+26 silly get     'cache-control': 'max-age=60',
+26 silly get     etag: '"39JXL4NW5FAXTHSTASEIDPSM7"',
+26 silly get     age: '47',
+26 silly get     connection: 'keep-alive',
+26 silly get     'x-served-by': 'cache-hkg6820-HKG',
+26 silly get     'x-cache': 'HIT',
+26 silly get     'x-cache-hits': '1',
+26 silly get     'x-timer': 'S1447915925.630547,VS0,VE0',
+26 silly get     vary: 'Accept' } ]
+27 verbose etag https://registry.npmjs.org/mongoose-auto-increment from cache
+28 verbose get saving mongoose-auto-increment to /Users/chihhsien/.npm/registry.npmjs.org/mongoose-auto-increment/.cache.json
+29 silly addNameRange number 2 { name: 'mongoose-auto-increment', range: '*', hasData: true }
+30 silly addNameRange versions [ 'mongoose-auto-increment',
+30 silly addNameRange   [ '1.0.0',
+30 silly addNameRange     '1.0.1',
+30 silly addNameRange     '1.1.0',
+30 silly addNameRange     '1.2.0',
+30 silly addNameRange     '1.1.1',
+30 silly addNameRange     '1.2.1',
+30 silly addNameRange     '1.2.2',
+30 silly addNameRange     '1.2.3',
+30 silly addNameRange     '1.3.0',
+30 silly addNameRange     '1.3.1',
+30 silly addNameRange     '2.0.0',
+30 silly addNameRange     '2.0.1',
+30 silly addNameRange     '2.0.2',
+30 silly addNameRange     '2.0.3',
+30 silly addNameRange     '2.0.4',
+30 silly addNameRange     '2.1.0',
+30 silly addNameRange     '2.1.1',
+30 silly addNameRange     '2.1.2',
+30 silly addNameRange     '2.1.3',
+30 silly addNameRange     '2.1.4',
+30 silly addNameRange     '3.0.0',
+30 silly addNameRange     '3.0.1',
+30 silly addNameRange     '3.0.2',
+30 silly addNameRange     '3.0.3',
+30 silly addNameRange     '3.0.4',
+30 silly addNameRange     '3.0.5',
+30 silly addNameRange     '3.0.6',
+30 silly addNameRange     '3.0.7',
+30 silly addNameRange     '3.0.8',
+30 silly addNameRange     '3.1.0',
+30 silly addNameRange     '3.2.0',
+30 silly addNameRange     '3.2.2',
+30 silly addNameRange     '3.2.3',
+30 silly addNameRange     '4.0.0',
+30 silly addNameRange     '3.2.4',
+30 silly addNameRange     '5.0.0',
+30 silly addNameRange     '5.0.1' ] ]
+31 verbose addNamed mongoose-auto-increment@5.0.1
+32 silly addNamed semver.valid 5.0.1
+33 silly addNamed semver.validRange 5.0.1
+34 silly cache afterAdd mongoose-auto-increment@5.0.1
+35 verbose afterAdd /Users/chihhsien/.npm/mongoose-auto-increment/5.0.1/package/package.json not in flight; writing
+36 verbose afterAdd /Users/chihhsien/.npm/mongoose-auto-increment/5.0.1/package/package.json written
+37 silly install resolved [ { name: 'mongoose-auto-increment',
+37 silly install resolved     version: '5.0.1',
+37 silly install resolved     description: 'This plugin allows you to auto-increment any field on any mongoose schema that you wish.',
+37 silly install resolved     repository:
+37 silly install resolved      { type: 'git',
+37 silly install resolved        url: 'git://github.com/codetunnel/mongoose-auto-increment.git' },
+37 silly install resolved     dependencies: { extend: '^3.0.0' },
+37 silly install resolved     peerDependencies: { mongoose: '^4.1.12' },
+37 silly install resolved     devDependencies: { async: '*', chai: '*', mocha: '*', mongoose: '^4.1.12' },
+37 silly install resolved     keywords:
+37 silly install resolved      [ 'mongoose',
+37 silly install resolved        'plugin',
+37 silly install resolved        'auto-increment',
+37 silly install resolved        'auto',
+37 silly install resolved        'increment',
+37 silly install resolved        'automatic',
+37 silly install resolved        'autoincrement',
+37 silly install resolved        'auto_increment',
+37 silly install resolved        'autoinc',
+37 silly install resolved        'auto-inc',
+37 silly install resolved        'auto_inc',
+37 silly install resolved        'pureautoinc',
+37 silly install resolved        'mongoose-pureautoinc' ],
+37 silly install resolved     author:
+37 silly install resolved      { name: 'Alex Ford',
+37 silly install resolved        email: 'alex.ford@codetunnel.com',
+37 silly install resolved        url: 'Chevex' },
+37 silly install resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+37 silly install resolved     scripts: { test: 'node_modules/mocha/bin/mocha' },
+37 silly install resolved     bugs: { url: 'https://github.com/codetunnel/mongoose-auto-increment/issues' },
+37 silly install resolved     gitHead: '50bd2a642c7565cf0a9f2c368d437b83160ad0a6',
+37 silly install resolved     homepage: 'https://github.com/codetunnel/mongoose-auto-increment#readme',
+37 silly install resolved     _id: 'mongoose-auto-increment@5.0.1',
+37 silly install resolved     _shasum: '827e051d9cc371dabe8bff1a704431d341cb79df',
+37 silly install resolved     _from: 'mongoose-auto-increment@*',
+37 silly install resolved     _npmVersion: '3.3.8',
+37 silly install resolved     _nodeVersion: '4.2.1',
+37 silly install resolved     _npmUser: { name: 'chevex', email: 'alex.ford@codetunnel.com' },
+37 silly install resolved     dist:
+37 silly install resolved      { shasum: '827e051d9cc371dabe8bff1a704431d341cb79df',
+37 silly install resolved        tarball: 'http://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-5.0.1.tgz' },
+37 silly install resolved     maintainers: [ [Object] ],
+37 silly install resolved     directories: {},
+37 silly install resolved     _resolved: 'https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-5.0.1.tgz',
+37 silly install resolved     readme: 'ERROR: No README data found!' } ]
+38 info install mongoose-auto-increment@5.0.1 into /Users/chihhsien/MXViewCloud
+39 info installOne mongoose-auto-increment@5.0.1
+40 verbose installOne of mongoose-auto-increment to /Users/chihhsien/MXViewCloud not in flight; installing
+41 verbose lock using /Users/chihhsien/.npm/_locks/mongoose-auto-increment-3aa65475d284c063.lock for /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+42 silly install write writing mongoose-auto-increment 5.0.1 to /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+43 silly cache addNamed cb mongoose-auto-increment@5.0.1
+44 verbose unbuild node_modules/mongoose-auto-increment
+45 info preuninstall mongoose-auto-increment@5.0.1
+46 info uninstall mongoose-auto-increment@5.0.1
+47 verbose unbuild rmStuff mongoose-auto-increment@5.0.1 from /Users/chihhsien/MXViewCloud/node_modules
+48 info postuninstall mongoose-auto-increment@5.0.1
+49 silly gentlyRm /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment is being purged from base /Users/chihhsien/MXViewCloud
+50 verbose gentlyRm don't care about contents; nuking /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+51 silly vacuum-fs purging /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+52 silly vacuum-fs quitting because other entries in /Users/chihhsien/MXViewCloud/node_modules
+53 verbose tar unpack /Users/chihhsien/.npm/mongoose-auto-increment/5.0.1/package.tgz
+54 verbose tar unpacking to /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+55 silly gentlyRm /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment is being purged
+56 verbose gentlyRm don't care about contents; nuking /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+57 silly gunzTarPerm modes [ '755', '644' ]
+58 silly gunzTarPerm extractEntry package.json
+59 silly gunzTarPerm extractEntry .npmignore
+60 silly gunzTarPerm extractEntry README.md
+61 silly gunzTarPerm extractEntry LICENSE
+62 silly gunzTarPerm extractEntry index.js
+63 silly gunzTarPerm extractEntry .travis.yml
+64 silly gunzTarPerm extractEntry CONTRIBUTING.md
+65 silly gunzTarPerm extractEntry test/test.js
+66 silly gunzTarPerm extractEntry test/mocha.opts
+67 info preinstall mongoose-auto-increment@5.0.1
+68 silly prepareForInstallMany adding extend@^3.0.0 from mongoose-auto-increment dependencies
+69 silly prepareForInstallMany adding mongoose@^4.1.12 from mongoose-auto-increment peerDependencies
+70 warn peerDependencies The peer dependency mongoose@^4.1.12 included from mongoose-auto-increment will no
+71 warn peerDependencies longer be automatically installed to fulfill the peerDependency
+72 warn peerDependencies in npm 3+. Your application will need to depend on it explicitly.
+73 silly cache add args [ 'extend@^3.0.0', null ]
+74 verbose cache add spec extend@^3.0.0
+75 silly cache add parsed spec { raw: 'extend@^3.0.0',
+75 silly cache add   scope: null,
+75 silly cache add   name: 'extend',
+75 silly cache add   rawSpec: '^3.0.0',
+75 silly cache add   spec: '>=3.0.0 <4.0.0',
+75 silly cache add   type: 'range' }
+76 verbose addNamed extend@>=3.0.0 <4.0.0
+77 silly addNamed semver.valid null
+78 silly addNamed semver.validRange >=3.0.0 <4.0.0
+79 silly addNameRange { name: 'extend', range: '>=3.0.0 <4.0.0', hasData: false }
+80 silly mapToRegistry name extend
+81 silly mapToRegistry using default registry
+82 silly mapToRegistry registry https://registry.npmjs.org/
+83 silly mapToRegistry uri https://registry.npmjs.org/extend
+84 verbose addNameRange registry:https://registry.npmjs.org/extend not in flight; fetching
+85 verbose request uri https://registry.npmjs.org/extend
+86 verbose request no auth needed
+87 info attempt registry request try #1 at 2:52:05 PM
+88 verbose etag "EUOQD0ET2RKD9BWW841CFUNAS"
+89 http request GET https://registry.npmjs.org/extend
+90 http 304 https://registry.npmjs.org/extend
+91 silly get cb [ 304,
+91 silly get   { date: 'Thu, 19 Nov 2015 06:52:05 GMT',
+91 silly get     via: '1.1 varnish',
+91 silly get     'cache-control': 'max-age=60',
+91 silly get     etag: '"EUOQD0ET2RKD9BWW841CFUNAS"',
+91 silly get     age: '24',
+91 silly get     connection: 'keep-alive',
+91 silly get     'x-served-by': 'cache-hkg6826-HKG',
+91 silly get     'x-cache': 'HIT',
+91 silly get     'x-cache-hits': '37',
+91 silly get     'x-timer': 'S1447915925.948131,VS0,VE0',
+91 silly get     vary: 'Accept' } ]
+92 verbose etag https://registry.npmjs.org/extend from cache
+93 verbose get saving extend to /Users/chihhsien/.npm/registry.npmjs.org/extend/.cache.json
+94 silly addNameRange number 2 { name: 'extend', range: '>=3.0.0 <4.0.0', hasData: true }
+95 silly addNameRange versions [ 'extend',
+95 silly addNameRange   [ '1.0.0',
+95 silly addNameRange     '1.1.0',
+95 silly addNameRange     '1.1.1',
+95 silly addNameRange     '1.1.3',
+95 silly addNameRange     '1.2.0',
+95 silly addNameRange     '1.2.1',
+95 silly addNameRange     '1.3.0',
+95 silly addNameRange     '2.0.0',
+95 silly addNameRange     '2.0.1',
+95 silly addNameRange     '3.0.0' ] ]
+96 verbose addNamed extend@3.0.0
+97 silly addNamed semver.valid 3.0.0
+98 silly addNamed semver.validRange 3.0.0
+99 silly cache afterAdd extend@3.0.0
+100 verbose afterAdd /Users/chihhsien/.npm/extend/3.0.0/package/package.json not in flight; writing
+101 verbose afterAdd /Users/chihhsien/.npm/extend/3.0.0/package/package.json written
+102 silly install resolved [ { name: 'extend',
+102 silly install resolved     author:
+102 silly install resolved      { name: 'Stefan Thomas',
+102 silly install resolved        email: 'justmoon@members.fsf.org',
+102 silly install resolved        url: 'http://www.justmoon.net' },
+102 silly install resolved     version: '3.0.0',
+102 silly install resolved     description: 'Port of jQuery.extend for node.js and the browser',
+102 silly install resolved     main: 'index',
+102 silly install resolved     scripts:
+102 silly install resolved      { test: 'npm run lint && node test/index.js && npm run coverage-quiet',
+102 silly install resolved        coverage: 'covert test/index.js',
+102 silly install resolved        'coverage-quiet': 'covert test/index.js --quiet',
+102 silly install resolved        lint: 'npm run jscs && npm run eslint',
+102 silly install resolved        jscs: 'jscs *.js */*.js',
+102 silly install resolved        eslint: 'eslint *.js */*.js' },
+102 silly install resolved     contributors: [ [Object] ],
+102 silly install resolved     keywords: [ 'extend', 'clone', 'merge' ],
+102 silly install resolved     repository:
+102 silly install resolved      { type: 'git',
+102 silly install resolved        url: 'git+https://github.com/justmoon/node-extend.git' },
+102 silly install resolved     dependencies: {},
+102 silly install resolved     devDependencies:
+102 silly install resolved      { tape: '^4.0.0',
+102 silly install resolved        covert: '^1.1.0',
+102 silly install resolved        jscs: '^1.13.1',
+102 silly install resolved        eslint: '^0.24.0' },
+102 silly install resolved     license: 'MIT',
+102 silly install resolved     gitHead: '148e7270cab2e9413af2cd0cab147070d755ed6d',
+102 silly install resolved     bugs: { url: 'https://github.com/justmoon/node-extend/issues' },
+102 silly install resolved     homepage: 'https://github.com/justmoon/node-extend#readme',
+102 silly install resolved     _id: 'extend@3.0.0',
+102 silly install resolved     _shasum: '5a474353b9f3353ddd8176dfd37b91c83a46f1d4',
+102 silly install resolved     _from: 'extend@>=3.0.0 <4.0.0',
+102 silly install resolved     _npmVersion: '2.11.3',
+102 silly install resolved     _nodeVersion: '2.3.1',
+102 silly install resolved     _npmUser: { name: 'ljharb', email: 'ljharb@gmail.com' },
+102 silly install resolved     dist:
+102 silly install resolved      { shasum: '5a474353b9f3353ddd8176dfd37b91c83a46f1d4',
+102 silly install resolved        tarball: 'http://registry.npmjs.org/extend/-/extend-3.0.0.tgz' },
+102 silly install resolved     maintainers: [ [Object], [Object] ],
+102 silly install resolved     directories: {},
+102 silly install resolved     _resolved: 'https://registry.npmjs.org/extend/-/extend-3.0.0.tgz',
+102 silly install resolved     readme: 'ERROR: No README data found!' } ]
+103 info install extend@3.0.0 into /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+104 info installOne extend@3.0.0
+105 verbose installOne of extend to /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment not in flight; installing
+106 verbose lock using /Users/chihhsien/.npm/_locks/extend-d512591335ebe9ca.lock for /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+107 silly install write writing extend 3.0.0 to /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+108 silly cache addNamed cb extend@3.0.0
+109 verbose unbuild node_modules/mongoose-auto-increment/node_modules/extend
+110 silly gentlyRm /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend is being purged from base /Users/chihhsien/MXViewCloud
+111 verbose gentlyRm don't care about contents; nuking /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+112 verbose tar unpack /Users/chihhsien/.npm/extend/3.0.0/package.tgz
+113 verbose tar unpacking to /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+114 silly gentlyRm /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend is being purged
+115 verbose gentlyRm don't care about contents; nuking /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+116 silly gunzTarPerm modes [ '755', '644' ]
+117 silly gunzTarPerm extractEntry package.json
+118 silly gunzTarPerm extractEntry .npmignore
+119 silly gunzTarPerm extractEntry README.md
+120 silly gunzTarPerm extractEntry LICENSE
+121 silly gunzTarPerm extractEntry index.js
+122 silly gunzTarPerm extractEntry CHANGELOG.md
+123 silly gunzTarPerm extractEntry .jscs.json
+124 silly gunzTarPerm extractEntry component.json
+125 silly gunzTarPerm extractEntry .eslintrc
+126 silly gunzTarPerm extractEntry .travis.yml
+127 info preinstall extend@3.0.0
+128 silly install resolved []
+129 verbose about to build /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+130 info build /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+131 verbose linkStuff [ false,
+131 verbose linkStuff   false,
+131 verbose linkStuff   false,
+131 verbose linkStuff   '/Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules' ]
+132 info linkStuff extend@3.0.0
+133 verbose linkBins extend@3.0.0
+134 verbose linkMans extend@3.0.0
+135 verbose rebuildBundles extend@3.0.0
+136 info install extend@3.0.0
+137 info postinstall extend@3.0.0
+138 verbose unlock done using /Users/chihhsien/.npm/_locks/extend-d512591335ebe9ca.lock for /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment/node_modules/extend
+139 verbose about to build /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+140 info build /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+141 verbose linkStuff [ false,
+141 verbose linkStuff   false,
+141 verbose linkStuff   false,
+141 verbose linkStuff   '/Users/chihhsien/MXViewCloud/node_modules' ]
+142 info linkStuff mongoose-auto-increment@5.0.1
+143 verbose linkBins mongoose-auto-increment@5.0.1
+144 verbose linkMans mongoose-auto-increment@5.0.1
+145 verbose rebuildBundles mongoose-auto-increment@5.0.1
+146 verbose rebuildBundles [ 'extend' ]
+147 info install mongoose-auto-increment@5.0.1
+148 info postinstall mongoose-auto-increment@5.0.1
+149 verbose already installed skipping mongoose@^4.1.12 /Users/chihhsien/MXViewCloud
+150 silly install resolved []
+151 verbose unlock done using /Users/chihhsien/.npm/_locks/mongoose-auto-increment-3aa65475d284c063.lock for /Users/chihhsien/MXViewCloud/node_modules/mongoose-auto-increment
+152 verbose stack Error: The package mongoose does not satisfy its siblings' peerDependencies requirements!
+152 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+152 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:264:7
+152 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:138:5
+152 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+152 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+152 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+152 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+152 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+152 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+152 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+153 verbose cwd /Users/chihhsien/MXViewCloud
+154 error Darwin 15.0.0
+155 error argv "node" "/usr/local/bin/npm" "install" "mongoose-auto-increment"
+156 error node v0.12.2
+157 error npm  v2.7.4
+158 error code EPEERINVALID
+159 error peerinvalid The package mongoose does not satisfy its siblings' peerDependencies requirements!
+159 error peerinvalid Peer mongoose-auto-increment@5.0.1 wants mongoose@^4.1.12
+160 verbose exit [ 1, true ]

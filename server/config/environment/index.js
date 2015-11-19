@@ -29,7 +29,7 @@ var all = {
 
   mqtt_broker_ip: 'ec2-52-3-105-64.compute-1.amazonaws.com',
 
-  mxview_cloud_server_ip: 'ec2-52-3-105-64.compute-1.amazonaws.com', //'localhost', //'192.168.2.21',
+  mxview_cloud_server_ip: 'localhost', //'ec2-52-3-105-64.compute-1.amazonaws.com', //'localhost', //'192.168.2.21',
 
   mxview_cloud_server_port: 8080
 };

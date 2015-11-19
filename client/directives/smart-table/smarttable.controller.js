@@ -35,9 +35,9 @@ angular.module('mxviewCloud')
     });
 
     Socket.on('mxviewcloud dashbaord', function(msg){
-      $scope.promo = msg;
-      var mxregister_data = JSON.parse(msg);
-      for(var myKey in mxregister_data){
+      //$scope.promo = msg;
+      //var mxregister_data = JSON.parse(msg);
+      /*for(var myKey in mxregister_data){
         //if(mxregister_data.hasOwnProperty('serverName')) {
          // MXviewSiteName[0] = mxregister_data[1]['serverName'];
 
@@ -48,8 +48,21 @@ angular.module('mxviewCloud')
 
           $scope.displayedCollection = $scope.rowCollection;
         //}
+      }*/
+      for(var i = 0; i<msg.length; i++){
+        var site_data = {
+          id: i,
+          sitename: msg[i]['dashboard_data']['serverName'],
+          informationEvent: msg[i]['dashboard_data']['deviceNormal'],
+          criticalEvent: msg[i]['dashboard_data']['deviceWarning'],
+          warningEvent: msg[i]['dashboard_data']['deviceCritical']
+        };
+
+        $scope.rowCollection.push(site_data);
       }
 
+      $scope.displayedCollection = [].concat($scope.rowCollection);
+      //$scope.displayedCollection = $scope.rowCollection;
       //mxregister_data.forEach(function(item, index) {
         //console.log("result="+mxregister_data[index]);
       //})
@@ -95,11 +108,11 @@ angular.module('mxviewCloud')
 
 
 
-    for(id; id<3; id++) {
+    /*for(id; id<3; id++) {
       $scope.rowCollection.push(generateItem(id));
     }
 
-    $scope.displayedCollection = [].concat($scope.rowCollection);
+    $scope.displayedCollection = [].concat($scope.rowCollection);*/
 
     $scope.addItem = function addItem() {
       $scope.rowCollection.push(generateItem(id));
