@@ -19,7 +19,7 @@ module.exports =  {
     //regData.findOne({}, {}, { sort: {'create_at':-1} }, function (err, data) {
     regData.find(function (err, data) {
       var all_data=[];
-      for(var i = 0; i< 63; i++){
+      for(var i = 0; i< data.length; i++){
 
         var dashboard_data = {
           'serverName' :data[i]['serverName'],
@@ -28,13 +28,12 @@ module.exports =  {
           'deviceCritical' :mxview_eventCountData[i]['deviceCritical']
         };
         var one_data = {
-          'serverid': i,
+          'serverid': data[i]['_id'],
           'dashboard_data': dashboard_data
         }
 
         all_data.push(one_data);
       }
-
 
       mxview_RegisterData = all_data;//JSON.stringify(all_data);
       callback(all_data);
