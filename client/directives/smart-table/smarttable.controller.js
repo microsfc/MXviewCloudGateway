@@ -27,9 +27,9 @@ angular.module('mxviewCloud')
     Socket.on('mxviewcloud trigger_data', function (msg) {
       console.log('trigger_data=' + msg);
       var update_data = JSON.parse(msg);
-      $scope.rowCollection[0].informationEvent = parseInt($scope.rowCollection[0].informationEvent)+parseInt(update_data['information_count']);
-      $scope.rowCollection[0].criticalEvent = parseInt($scope.rowCollection[0].criticalEvent)+parseInt(update_data['critical_count']);
-      $scope.rowCollection[0].warningEvent = parseInt($scope.rowCollection[0].warningEvent)+parseInt(update_data['warning_count']);
+      $scope.rowCollection[update_data['regKey']].informationEvent = parseInt($scope.rowCollection[update_data['regKey']].informationEvent)+parseInt(update_data['information_count']);
+      $scope.rowCollection[update_data['regKey']].criticalEvent = parseInt($scope.rowCollection[update_data['regKey']].criticalEvent)+parseInt(update_data['critical_count']);
+      $scope.rowCollection[update_data['regKey']].warningEvent = parseInt($scope.rowCollection[update_data['regKey']].warningEvent)+parseInt(update_data['warning_count']);
 
       $scope.displayedCollection = $scope.rowCollection;
     });
@@ -51,7 +51,7 @@ angular.module('mxviewCloud')
       }*/
       for(var i = 0; i<msg.length; i++){
         var site_data = {
-          id: i,
+          id: msg[i]['dashboard_data']['_id'],
           sitename: msg[i]['dashboard_data']['serverName'],
           informationEvent: msg[i]['dashboard_data']['deviceNormal'],
           criticalEvent: msg[i]['dashboard_data']['deviceWarning'],

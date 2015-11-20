@@ -192,6 +192,7 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
                         }
 
                         var dynamic_dashbaord_data = {
+                          "regKey": mxviewRegKey,
                           'critical_count':critical_count,
                           'warning_count':warning_count,
                           'information_count':information_count
