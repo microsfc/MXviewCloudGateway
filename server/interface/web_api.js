@@ -84,7 +84,50 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
     http_module.httpRequest(mxviewip, config.mxview_port, mxview_web_url.getLinkSummary(), 'GET', '', '',process_linkSummary_data);
   }
 
+function process_trigger_linkSummary_data(link_summary_data) {
+  if(isEmpty(link_summary_data['0']['Critical']['0']['Link'])) {
+    link_critical_count = 0;
+  }else {
+    link_critical_count = link_summary_data['0']['Critical']['0']['Link'].length;
+  }
+
+  if(isEmpty(link_summary_data['0']['Warning']['0']['Link'])) {
+    link_warning_count = 0;
+  }else {
+    link_warning_count = link_summary_data['0']['Warning']['0']['Link'].length;
+  }
+
+  if(isEmpty(link_summary_data['0']['Information']['0']['Link'])) {
+    link_information_count = 0
+  }else {
+    link_information_count = link_summary_data['0']['Information']['0']['Link'].length;
+  }
+}
+
+function process_trigger_deviceSummary_data(device_summary_data) {
+
+
+      if(isEmpty(device_summary_data['0']['Critical']['0']['Device'])) {
+        device_critical_count = 0;
+      }else {
+        device_critical_count = device_summary_data['0']['Critical']['0']['Device'].length;
+      }
+
+      if(isEmpty(device_summary_data['0']['Warning']['0']['Device'])) {
+        device_warning_count = 0;
+      }else {
+        device_warning_count = device_summary_data['0']['Warning']['0']['Device'].length;
+      }
+
+      if(isEmpty(device_summary_data['0']['Information']['0']['Device'])) {
+        device_information_count = 0;
+      }else {
+        device_information_count = device_summary_data['0']['Information']['0']['Device'].length;
+      }
+}
+
   function getdevice_summary(mxviewip) {
+
 
     function process_deviceSummary_data(device_summary_data) {
       console.log('device summary data=' + device_summary_data);
@@ -92,22 +135,24 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
       if(device_summary_data.indexOf(SEVERITY_TAG) > -1) {
         xmlParser(device_summary_data, function (err, result) {
           var devicesummary_data = result;
-          if(isEmpty(devicesummary_data['Severity']['Critical']['0']['Device'])) {
-            device_critical_count = 0
-          }else {
-            device_critical_count = devicesummary_data['Severity']['Critical']['0']['Device'].length;
-          }
+          if(!isEmpty(devicesummary_data['Severity'])) {
+            if(isEmpty(devicesummary_data['Severity']['Critical']['0']['Device'])) {
+              device_critical_count = 0;
+            }else {
+              device_critical_count = devicesummary_data['Severity']['Critical']['0']['Device'].length;
+            }
 
-          if(isEmpty(devicesummary_data['Severity']['Warning']['0']['Device'])) {
-            device_warning_count = 0
-          }else {
-            device_warning_count = devicesummary_data['Severity']['Warning']['0']['Device'].length;
-          }
+            if(isEmpty(devicesummary_data['Severity']['Warning']['0']['Device'])) {
+              device_warning_count = 0;
+            }else {
+              device_warning_count = devicesummary_data['Severity']['Warning']['0']['Device'].length;
+            }
 
-          if(isEmpty(devicesummary_data['Severity']['Information']['0']['Device'])) {
-            device_information_count = 0
-          }else {
-            device_information_count = devicesummary_data['Severity']['Information']['0']['Device'].length;
+            if(isEmpty(devicesummary_data['Severity']['Information']['0']['Device'])) {
+              device_information_count = 0;
+            }else {
+              device_information_count = devicesummary_data['Severity']['Information']['0']['Device'].length;
+            }
           }
 
         });
@@ -154,7 +199,6 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
 
               function get_http_push_data(pushdata) {
                 console.log('http push data =' + pushdata);
-
                 var contain_index = pushdata.indexOf("<Trigger_Detail>");
                 var parsing_data = pushdata.substring(contain_index, pushdata.length);
                 xmlParser(parsing_data, function (err, result) {
@@ -167,7 +211,45 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
                   if(!isEmpty(push_data)){
 
                     if(!isEmpty(push_data['Trigger_Detail'])) {
-                      if(isEmpty(push_data['Trigger_Detail']['Event'])) {
+                      if(isEmpty(push_data['Trigger_Detail']['Severity'])) {
+                        console.log('not find dashboard trigger data')
+                      }else {
+
+                        if(!isEmpty(push_data['Trigger_Detail']['Severity'])) {
+                          for(var j=0; j<push_data['Trigger_Detail']['Severity'].length; j++){
+
+                            if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Device'])
+                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Device'])
+                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Device'])
+                            ) {
+                              process_trigger_deviceSummary_data(push_data['Trigger_Detail']['Severity']);
+                            }
+
+                            if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Link'])
+                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Link'])
+                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Link'])
+                            ) {
+                              process_trigger_linkSummary_data(push_data['Trigger_Detail']['Severity']);
+                            }
+
+                          }
+                        }
+
+                        critical_count = device_critical_count + link_critical_count;
+                        warning_count = device_warning_count + link_warning_count;
+                        information_count = device_information_count + link_information_count;
+
+                        var dynamic_dashbaord_data = {
+                          "regKey": mxviewRegKey,
+                          'critical_count':critical_count,
+                          'warning_count':warning_count,
+                          'information_count':information_count
+                        };
+
+                        mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
+
+                      }
+                      /*if(isEmpty(push_data['Trigger_Detail']['Event'])) {
                         console.log('not find dashboard trigger data')
                       }else {
 
@@ -200,7 +282,7 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
 
                         mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
 
-                      }
+                      }*/
                     }
 
                   }
