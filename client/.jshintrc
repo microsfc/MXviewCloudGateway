@@ -1,5 +1,6 @@
 {
   "browser": true,
+  "node": true,
   "globals": {
     "angular": true,
     "browser": true,

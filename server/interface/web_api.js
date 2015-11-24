@@ -55,14 +55,23 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
       if(link_summary_data.indexOf(SEVERITY_TAG) > -1) {
         xmlParser(link_summary_data, function (err, result) {
           var linksummary_data = result;
-          if(isEmpty(linksummary_data['Severity']['Critical']['Link'])) {
-            link_critical_count = 0;
-            link_warning_count = 0;
-            link_information_count = 0;
+          if(!isEmpty(linksummary_data['Severity']['Critical']['0']['Link']))
+          {
+            link_critical_count = linksummary_data['Severity']['Critical']['0']['Link'].length;
           }else {
-            link_critical_count = linksummary_data['Severity']['Critical']['Link'].length;
-            link_warning_count = linksummary_data['Severity']['Warning']['Link'].length;
-            link_information_count = linksummary_data['Severity']['Information']['Link'].length;
+            link_critical_count = 0;
+          }
+          if(!isEmpty(linksummary_data['Severity']['Warning']['0']['Link']))
+          {
+            link_warning_count = linksummary_data['Severity']['Warning']['0']['Link'].length;
+          }else{
+            link_warning_count = 0;
+          }
+          if(!isEmpty(linksummary_data['Severity']['Information']['0']['Link']))
+          {
+            link_information_count = linksummary_data['Severity']['Information']['0']['Link'].length;
+          }else{
+            link_information_count = 0;
           }
 
           var critical_count = device_critical_count + link_critical_count;
@@ -98,7 +107,7 @@ function process_trigger_linkSummary_data(link_summary_data) {
   }
 
   if(isEmpty(link_summary_data['0']['Information']['0']['Link'])) {
-    link_information_count = 0
+    link_information_count = 0;
   }else {
     link_information_count = link_summary_data['0']['Information']['0']['Link'].length;
   }
@@ -135,7 +144,7 @@ function process_trigger_deviceSummary_data(device_summary_data) {
       if(device_summary_data.indexOf(SEVERITY_TAG) > -1) {
         xmlParser(device_summary_data, function (err, result) {
           var devicesummary_data = result;
-          if(!isEmpty(devicesummary_data['Severity'])) {
+          if(!isEmpty(devicesummary_data)) {
             if(isEmpty(devicesummary_data['Severity']['Critical']['0']['Device'])) {
               device_critical_count = 0;
             }else {
@@ -198,7 +207,7 @@ function process_trigger_deviceSummary_data(device_summary_data) {
               var dataString = JSON.stringify(register_data);
 
               function get_http_push_data(pushdata) {
-                console.log('http push data =' + pushdata);
+
                 var contain_index = pushdata.indexOf("<Trigger_Detail>");
                 var parsing_data = pushdata.substring(contain_index, pushdata.length);
                 xmlParser(parsing_data, function (err, result) {
