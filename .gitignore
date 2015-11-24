@@ -1,2 +1,7 @@
+node_modules/
+client/bower_components/
 .idea/
 docs/
+dist/
+.sass-cache/
+.DS_Store

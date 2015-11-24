@@ -54,8 +54,8 @@ angular.module('mxviewCloud')
           id: msg[i]['dashboard_data']['_id'],
           sitename: msg[i]['dashboard_data']['serverName'],
           informationEvent: msg[i]['dashboard_data']['deviceNormal'],
-          criticalEvent: msg[i]['dashboard_data']['deviceWarning'],
-          warningEvent: msg[i]['dashboard_data']['deviceCritical']
+          criticalEvent: msg[i]['dashboard_data']['deviceCritical'],
+          warningEvent: msg[i]['dashboard_data']['deviceWarning']
         };
 
         $scope.rowCollection.push(site_data);
