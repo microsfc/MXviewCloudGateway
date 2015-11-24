@@ -93,45 +93,45 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
     http_module.httpRequest(mxviewip, config.mxview_port, mxview_web_url.getLinkSummary(), 'GET', '', '',process_linkSummary_data);
   }
 
-function process_trigger_linkSummary_data(link_summary_data) {
-  if(isEmpty(link_summary_data['0']['Critical']['0']['Link'])) {
+function process_trigger_linkSummary_data(link_summary_data, count) {
+  if(isEmpty(link_summary_data[count]['Critical']['0']['Link'])) {
     link_critical_count = 0;
   }else {
-    link_critical_count = link_summary_data['0']['Critical']['0']['Link'].length;
+    link_critical_count = link_summary_data[count]['Critical']['0']['Link'].length;
   }
 
-  if(isEmpty(link_summary_data['0']['Warning']['0']['Link'])) {
+  if(isEmpty(link_summary_data[count]['Warning']['0']['Link'])) {
     link_warning_count = 0;
   }else {
-    link_warning_count = link_summary_data['0']['Warning']['0']['Link'].length;
+    link_warning_count = link_summary_data[count]['Warning']['0']['Link'].length;
   }
 
-  if(isEmpty(link_summary_data['0']['Information']['0']['Link'])) {
+  if(isEmpty(link_summary_data[count]['Information']['0']['Link'])) {
     link_information_count = 0;
   }else {
-    link_information_count = link_summary_data['0']['Information']['0']['Link'].length;
+    link_information_count = link_summary_data[count]['Information']['0']['Link'].length;
   }
 }
 
-function process_trigger_deviceSummary_data(device_summary_data) {
+function process_trigger_deviceSummary_data(device_summary_data, count) {
 
 
-      if(isEmpty(device_summary_data['0']['Critical']['0']['Device'])) {
+      if(isEmpty(device_summary_data[count]['Critical']['0']['Device'])) {
         device_critical_count = 0;
       }else {
-        device_critical_count = device_summary_data['0']['Critical']['0']['Device'].length;
+        device_critical_count = device_summary_data[count]['Critical']['0']['Device'].length;
       }
 
-      if(isEmpty(device_summary_data['0']['Warning']['0']['Device'])) {
+      if(isEmpty(device_summary_data[count]['Warning']['0']['Device'])) {
         device_warning_count = 0;
       }else {
-        device_warning_count = device_summary_data['0']['Warning']['0']['Device'].length;
+        device_warning_count = device_summary_data[count]['Warning']['0']['Device'].length;
       }
 
-      if(isEmpty(device_summary_data['0']['Information']['0']['Device'])) {
+      if(isEmpty(device_summary_data[count]['Information']['0']['Device'])) {
         device_information_count = 0;
       }else {
-        device_information_count = device_summary_data['0']['Information']['0']['Device'].length;
+        device_information_count = device_summary_data[count]['Information']['0']['Device'].length;
       }
 }
 
@@ -212,7 +212,7 @@ function process_trigger_deviceSummary_data(device_summary_data) {
                 var parsing_data = pushdata.substring(contain_index, pushdata.length);
                 xmlParser(parsing_data, function (err, result) {
                   var push_data = result;
-                  var event_type = 0;
+                  //var event_type = 0;
                   var critical_count = 0;
                   var information_count = 0;
                   var warning_count = 0;
@@ -231,14 +231,14 @@ function process_trigger_deviceSummary_data(device_summary_data) {
                               || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Device'])
                               || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Device'])
                             ) {
-                              process_trigger_deviceSummary_data(push_data['Trigger_Detail']['Severity']);
+                              process_trigger_deviceSummary_data(push_data['Trigger_Detail']['Severity'], j);
                             }
 
                             if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Link'])
                               || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Link'])
                               || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Link'])
                             ) {
-                              process_trigger_linkSummary_data(push_data['Trigger_Detail']['Severity']);
+                              process_trigger_linkSummary_data(push_data['Trigger_Detail']['Severity'], j);
                             }
 
                           }

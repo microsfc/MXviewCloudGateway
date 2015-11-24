@@ -8,8 +8,7 @@ angular.module('mxviewCloud', [
   'ngAnimate',
   'btford.socket-io',
   'uiGmapgoogle-maps',
-  'smart-table',
-  'leaflet-directive'
+  'smart-table'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
