@@ -6,6 +6,6 @@ angular.module('mxviewCloud')
       .when('/', {
         templateUrl: 'views/home/home.html',
         controller: 'HomeCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'home'
       });
   });

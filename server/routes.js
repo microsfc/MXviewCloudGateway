@@ -2,7 +2,6 @@
 
 var config = require('./config/environment');
 var bodyParser = require('body-parser');
-var RESTful = require('./interface/RESTful_api.js');
 
 module.exports = function (app) {
 
@@ -20,14 +19,6 @@ module.exports = function (app) {
     .get(function (req, res) {
       res.status(404).end();
     });
-
-  /*app.route('/reg')
-      .get(RESTful.process_MXviewRegisterData)
-      .post(RESTful.process_MXviewRegisterData);*/
-
-  app.route('/getNetworkStatus')
-    .get(RESTful.process_NetworkStatusData)
-    .post(RESTful.process_NetworkStatusData);
 
   app.route('/*')
     .get(function (req, res) {

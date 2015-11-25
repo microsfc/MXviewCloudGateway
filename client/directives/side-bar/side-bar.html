@@ -1,0 +1,7 @@
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="SideBarCtrl as ctrl">
+  <ul class="nav nav-sidebar">
+    <li ng-repeat="item in ctrl.menu" ng-class="{active: ctrl.isActive(item.link)}">
+      <a ng-href="{{item.link}}">{{item.title}}</a>
+    </li>
+  </ul>
+</div>

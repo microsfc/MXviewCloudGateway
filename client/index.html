@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html ng-app="mxviewCloud">
+<!doctype html>
+<html>
   <head>
-
-    <base href="/">
-
-    <title>mxviewCloud</title>
-
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+    <title>mxviewCloud</title>
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
@@ -14,34 +13,33 @@
     <!-- build:css app.css -->
 
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css">
     <!-- endinject -->
 
     <link rel="stylesheet" href="styles/css/app.css">
-    <link rel="stylesheet" href="styles/css/bootstrap.css">
+
+    <script src="socket.io/socket.io.js"></script>
 
     <!-- build:js app.js -->
 
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-socket-io/socket.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
     <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
-
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <!-- endinject -->
 
     <!-- inject:js -->
-    <script src="socket.io/socket.io.js"></script>
     <script src="app.js"></script>
-    <script src="views/googlemap/googlemap.js"></script>
-    <script src="views/googlemap/googlemap.controller.js"></script>
     <script src="views/signup/signup.js"></script>
     <script src="views/signup/signup.controller.js"></script>
     <script src="views/login/login.js"></script>
@@ -50,13 +48,15 @@
     <script src="views/home/home.controller.js"></script>
     <script src="services/socket/socket.service.js"></script>
     <script src="services/socket/socket.mock.js"></script>
-    <script src="services/-dashboard/-dashboard.resource.js"></script>
+    <script src="services/reg/reg.resource.js"></script>
     <script src="services/main-dashboard/main-dashboard.resource.js"></script>
     <script src="services/auth/auth.js"></script>
-    <script src="services/reg/reg.resource.js"></script>
-    <script src="directives/smart-table/smarttable.controller.js"></script>
-    <script src="directives/nav-bar/nav-bar.directive.js"></script>
     <script src="directives/smart-table/smart-table.directive.js"></script>
+    <script src="directives/smart-table/smart-table.controller.js"></script>
+    <script src="directives/side-bar/side-bar.directive.js"></script>
+    <script src="directives/side-bar/side-bar.controller.js"></script>
+    <script src="directives/nav-bar/nav-bar.directive.js"></script>
+    <script src="directives/nav-bar/nav-bar.controller.js"></script>
     <!-- endinject -->
 
 
@@ -67,15 +67,7 @@
     <!-- endbuild -->
 
   </head>
-  <body>
-
-    <strong>mxviewCloud</strong>
-
-    <nav-bar></nav-bar>
-
+  <body ng-app="mxviewCloud">
     <div ng-view></div>
-
-    <smart-table></smart-table>
-
   </body>
 </html>

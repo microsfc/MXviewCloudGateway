@@ -6,7 +6,23 @@ angular.module('mxviewCloud')
     var vm = this;
 
     angular.extend(vm, {
-      name: 'HomeCtrl'
+      mapCenter: {
+        lat: 24.984095,
+        lng: 121.551983,
+        zoom: 16
+      },
+      mapMarkers: {
+        taipeiMarker: {
+          lat: 24.984095,
+          lng: 121.551983,
+          message: "Taipei",
+          focus: true,
+          draggable: false
+        },
+      },
+      defaults: {
+        scrollWheelZoom: false
+      }
     });
 
     Socket.on('connect', function(){
@@ -16,5 +32,4 @@ angular.module('mxviewCloud')
     Socket.on('user connected', function(msg){
       vm.promo = msg;
     });
-
   });
