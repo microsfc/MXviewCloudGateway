@@ -4,13 +4,18 @@ var express = require('express');
 var chalk = require('chalk');
 var config = require('./config/environment');
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
-mongoose.connect(config.mongo.uri, config.mongo.options);
+var connection = mongoose.connect(config.mongo.uri, config.mongo.options);
+autoIncrement.initialize(connection);
 
 var app = express();
 var server = require('http').createServer(app);
-var socket = require('socket.io')(server, { serveClient: true });
-require('./config/sockets.js')(socket);
+var socketio = require('socket.io')(server, {
+  serveClient: true,
+  path: '/socket.io'
+});
+require('./config/sockets.js')(socketio);
 
 require('./config/express')(app);
 require('./routes')(app,config.mxview_server_ip);
@@ -66,11 +71,11 @@ if (process.env.environment == 'production')
 server.listen(config.port, config.ip, function () {
 
   console.log(
-    chalk.red('\nExpress server listening on port ')
-    + chalk.yellow('%d')
-    + chalk.red(', in ')
-    + chalk.yellow('%s')
-    + chalk.red(' mode.\n'),
+    chalk.red('\nExpress server listening on port ') +
+      chalk.yellow('%d') +
+      chalk.red(', in ') +
+      chalk.yellow('%s') +
+      chalk.red(' mode.\n'),
     config.port,
     app.get('env')
   );
@@ -79,7 +84,7 @@ server.listen(config.port, config.ip, function () {
     require('ripe').ready();
   }
 
-  require('./main')(app,config.mxview_server_ip, socket);
+  require('./main')(app,config.mxview_server_ip, socketio);
 
 });
 

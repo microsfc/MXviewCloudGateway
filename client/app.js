@@ -7,8 +7,8 @@ angular.module('mxviewCloud', [
   'ngSanitize',
   'ngAnimate',
   'btford.socket-io',
-  'uiGmapgoogle-maps',
-  'smart-table'
+  'smart-table',
+  'leaflet-directive'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
@@ -57,13 +57,5 @@ angular.module('mxviewCloud', [
           $location.path('/');
         }
       });
-    });
-
-  })
-
-  .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-    v: '3.17',
-    libraries: 'weather,geometry,visualization'
     });
   });

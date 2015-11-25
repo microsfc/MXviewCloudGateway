@@ -1,12 +1,5 @@
-<div ng-controller="SmartTableCtrl">
-
-  <button type="button" ng-click="addRandomItem(row)" class="btn btn-sm btn-success">
-    <i class="glyphicon glyphicon-plus">
-    </i> Add random item
-  </button>
-
-  <table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
-    <thead>
+<table st-table="vm.displayedCollection" st-safe-src="vm.rowCollection" class="table table-striped">
+  <thead>
     <tr>
       <th st-sort="sitename">Site Name</th>
       <th st-sort="informationEvent">Information Event</th>
@@ -16,21 +9,18 @@
     <tr>
       <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
     </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="row in displayedCollection">
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in vm.displayedCollection">
       <td>{{row.sitename}}</td>
       <td>{{row.informationEvent}}</td>
       <td>{{row.criticalEvent}}</td>
       <td>{{row.warningEvent}}</td>
       <td>
-        <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
-          <i class="glyphicon glyphicon-remove-circle">
-          </i>
+        <button type="button" ng-click="vm.removeItem(row)" class="btn btn-sm btn-danger">
+          <i class="glyphicon glyphicon-remove-circle"></i>
         </button>
       </td>
     </tr>
-    </tbody>
-  </table>
-
-</div>
+  </tbody>
+</table>
