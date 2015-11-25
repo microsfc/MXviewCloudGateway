@@ -54,38 +54,45 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
 
       if(link_summary_data.indexOf(SEVERITY_TAG) > -1) {
         xmlParser(link_summary_data, function (err, result) {
+
           var linksummary_data = result;
-          if(!isEmpty(linksummary_data['Severity']['Critical']['0']['Link']))
-          {
-            link_critical_count = linksummary_data['Severity']['Critical']['0']['Link'].length;
-          }else {
-            link_critical_count = 0;
-          }
-          if(!isEmpty(linksummary_data['Severity']['Warning']['0']['Link']))
-          {
-            link_warning_count = linksummary_data['Severity']['Warning']['0']['Link'].length;
-          }else{
-            link_warning_count = 0;
-          }
-          if(!isEmpty(linksummary_data['Severity']['Information']['0']['Link']))
-          {
-            link_information_count = linksummary_data['Severity']['Information']['0']['Link'].length;
-          }else{
-            link_information_count = 0;
-          }
 
-          var critical_count = device_critical_count + link_critical_count;
-          var warning_count = device_warning_count + link_warning_count;
-          var information_count = device_information_count + link_information_count;
+         if(!isEmpty(linksummary_data)) {
+           if(!isEmpty(linksummary_data['Severity']['Critical']['0']['Link']))
+           {
+             link_critical_count = linksummary_data['Severity']['Critical']['0']['Link'].length;
+           }else {
+             link_critical_count = 0;
+           }
+           if(!isEmpty(linksummary_data['Severity']['Warning']['0']['Link']))
+           {
+             link_warning_count = linksummary_data['Severity']['Warning']['0']['Link'].length;
+           }else{
+             link_warning_count = 0;
+           }
+           if(!isEmpty(linksummary_data['Severity']['Information']['0']['Link']))
+           {
+             link_information_count = linksummary_data['Severity']['Information']['0']['Link'].length;
+           }else{
+             link_information_count = 0;
+           }
 
-          var dashboard_data = {
-            "regKey": mxviewRegKey,
-            "deviceNormal": information_count,
-            "deviceWarning": warning_count,
-            "deviceCritical": critical_count
-          };
+           var critical_count = device_critical_count + link_critical_count;
+           var warning_count = device_warning_count + link_warning_count;
+           var information_count = device_information_count + link_information_count;
 
-          http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+           var dashboard_data = {
+             "regKey": mxviewRegKey,
+             "deviceNormal": information_count,
+             "deviceWarning": warning_count,
+             "deviceCritical": critical_count
+           };
+
+           http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
+         }
+
+
+
         });
       }
     }
