@@ -1,4 +1,4 @@
-<table st-table="vm.displayedCollection" st-safe-src="vm.rowCollection" class="table table-striped">
+<table st-table="displayedCollection" st-safe-src="rowCollection" class="table table-striped">
   <thead>
     <tr>
       <th st-sort="sitename">Site Name</th>
@@ -11,13 +11,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="row in vm.displayedCollection">
+    <tr ng-repeat="row in displayedCollection">
       <td>{{row.sitename}}</td>
       <td>{{row.informationEvent}}</td>
       <td>{{row.criticalEvent}}</td>
       <td>{{row.warningEvent}}</td>
       <td>
-        <button type="button" ng-click="vm.removeItem(row)" class="btn btn-sm btn-danger">
+        <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
           <i class="glyphicon glyphicon-remove-circle"></i>
         </button>
       </td>

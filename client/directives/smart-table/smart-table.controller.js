@@ -4,9 +4,9 @@
 'use strict';
 
 angular.module('mxviewCloud')
-  .controller('SmartTableCtrl', ['Socket', function (Socket) {
+  .controller('SmartTableCtrl', ['$scope', 'Socket', function ($scope, Socket) {
 
-    var vm = this;
+    //var vm = this;
 
     var MXviewSiteName = ['Site1','Site2','Site3'];
     var informationEvent = [3,2,1];
@@ -14,24 +14,24 @@ angular.module('mxviewCloud')
     var warningEvent = [3,5,1];
     var id = 0;
 
-    vm.rowCollection = [];
+    $scope.rowCollection = [];
 
     Socket.on('connect', function(){
-      vm.title = 'connected';
+      $scope.title = 'connected';
     });
 
     Socket.on('user connected', function(msg){
-      vm.promo = msg;
+      $scope.promo = msg;
     });
 
     Socket.on('mxviewcloud trigger_data', function (msg) {
       console.log('trigger_data=' + msg);
       var update_data = JSON.parse(msg);
-      vm.rowCollection[update_data['regKey']].informationEvent = parseInt(update_data['information_count']);
-      vm.rowCollection[update_data['regKey']].criticalEvent = parseInt(update_data['critical_count']);
-      vm.rowCollection[update_data['regKey']].warningEvent = parseInt(update_data['warning_count']);
+      $scope.rowCollection[update_data['regKey']].informationEvent = parseInt(update_data['information_count']);
+      $scope.rowCollection[update_data['regKey']].criticalEvent = parseInt(update_data['critical_count']);
+      $scope.rowCollection[update_data['regKey']].warningEvent = parseInt(update_data['warning_count']);
 
-      vm.displayedCollection = vm.rowCollection;
+      $scope.displayedCollection = $scope.rowCollection;
     });
 
     Socket.on('mxviewcloud dashbaord', function(msg){
@@ -43,9 +43,9 @@ angular.module('mxviewCloud')
           criticalEvent: msg[i]['dashboard_data']['deviceCritical'],
           warningEvent: msg[i]['dashboard_data']['deviceWarning']
         };
-        vm.rowCollection.push(site_data);
+        $scope.rowCollection.push(site_data);
       }
-      vm.displayedCollection = [].concat(vm.rowCollection);
+      $scope.displayedCollection = [].concat($scope.rowCollection);
     });
 
     function generateItem(id) {
@@ -79,15 +79,15 @@ angular.module('mxviewCloud')
     }
 
     //add to the real data holder
-    vm.addRandomItem = function addRandomItem() {
-      vm.rowCollection.push(generateRandomItem(id));
+    $scope.addRandomItem = function addRandomItem() {
+      $scope.rowCollection.push(generateRandomItem(id));
       id++;
     };
 
-    vm.removeItem = function removeItem(row) {
-      var index = vm.rowCollection.indexOf(row);
+    $scope.removeItem = function removeItem(row) {
+      var index = $scope.rowCollection.indexOf(row);
       if(index != -1) {
-        vm.rowCollection.splice(index, 1);
+        $scope.rowCollection.splice(index, 1);
       }
     };
   }]);
