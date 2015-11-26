@@ -6,7 +6,11 @@ var topicObj = new mqTopic();
 
 module.exports = function(app, mxviewServerIP, socketIO) {
 
+<<<<<<< HEAD
   //mxview_web_api.register_MXviewData(mxviewServerIP);
+=======
+  mxview_web_api.register_MXviewData(mxviewServerIP);
+>>>>>>> e32469ebeb6ad66ef93733f5424b2e0da0d66426
   mxview_web_api.subscribeMQTT('ec2-52-3-105-64.compute-1.amazonaws.com', topicObj.getMXviewDashbaordTopic(), socketIO);
   //mxview_web_api.getdevice_summary(mxviewServerIP);
   //mxview_web_api.getlink_summary(mxviewServerIP);
