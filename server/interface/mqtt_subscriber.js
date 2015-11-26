@@ -7,6 +7,7 @@ module.exports = function(broker_ip, socket){
     var client  = mqtt.connect('mqtt://' + broker_ip); //192.168.127.68'
     var g_topic = "";
     var g_message = "";
+    var socket_io_connection_flag = 0;
 
     client.on('connect', function () {
         console.log('mqtt connected');
@@ -31,6 +32,10 @@ module.exports = function(broker_ip, socket){
 
       console.log("mqtt receive = " + message.toString());
       g_message = message.toString();
+      if(socket_io_connection_flag) {
+	console.log('trigger data=',g_message);
+	socket.emit('mxviewcloud trigger_data', g_message);
+      }
       //client.end();
     } );
 
@@ -39,13 +44,19 @@ module.exports = function(broker_ip, socket){
       g_topic = topic;
     };
 
+    socket.on('disconnect', function () {
+      console.log('[%s] %s disconnected.', new Date().toUTCString(), socket.ip);
+      socket_io_connection_flag = 0;
+    });
+
     socket.on('connection', function(socket) {
-      setInterval(function() {
+        socket_io_connection_flag  = 1;
+	/*setInterval(function() {
         if(g_message.length > 0){
           socket.emit('mxviewcloud trigger_data', g_message);
           g_message = '';
         }
-      }, 1000);
+      }, 1000);*/
     });
 
     return module;
