@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('mxviewCloud')
-  .controller('HomeCtrl', function (Socket) {
+  .controller('HomeCtrl', function ($scope ,Socket) {
 
-    var vm = this;
+    //var vm = this;
 
-    angular.extend(vm, {
+    angular.extend($scope, {
       mapCenter: {
         lat: 24.984095,
         lng: 121.551983,
@@ -17,19 +17,27 @@ angular.module('mxviewCloud')
           lng: 121.551983,
           message: "Taipei",
           focus: true,
-          draggable: false
+          draggable: false,
+          icon: {
+            type: 'awesomeMarker',
+            icon: 'home',
+            markerColor: 'red'
+          },
         },
       },
-      defaults: {
-        scrollWheelZoom: false
+      defaultIcon: {},
+      awesomeMarkerIcon: {
+        type: 'awesomeMarker',
+        icon: 'tag',
+        markerColor: 'red'
       }
     });
 
     Socket.on('connect', function(){
-      vm.title = 'connected';
+      $scope.title = 'connected';
     });
 
     Socket.on('user connected', function(msg){
-      vm.promo = msg;
+      $scope.promo = msg;
     });
   });
