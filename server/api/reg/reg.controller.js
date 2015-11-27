@@ -41,9 +41,17 @@ exports.show = function (req, res) {
  * @param res
  */
 exports.create = function (req, res) {
-  Reg.create(req.body, function (err, reg) {
-    if (err) { return handleError(res, err); }
-    return res.status(201).json({regKey:reg._id});
+  Reg.find({ 'license': req.body.license }, function (err, docs) {
+    // docs is an array
+    if(docs.length == 0) {
+      Reg.create(req.body, function (err, reg) {
+        if (err) { return handleError(res, err); }
+        return res.status(201).json({regKey:reg._id});
+      });
+    }else {
+      return res.status(201).json({regKey:docs[0]._id});
+    }
+
   });
 };
 

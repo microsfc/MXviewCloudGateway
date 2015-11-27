@@ -41,9 +41,28 @@ exports.show = function (req, res) {
  * @param res
  */
 exports.create = function (req, res) {
-  MainDashboard.create(req.body, function (err, mainDashboard) {
-    if (err) { return handleError(res, err); }
-    return res.status(201).json(mainDashboard);
+
+  MainDashboard.find({ 'regKey': req.body.regKey }, function (err, docs) {
+    // docs is an array
+    if(docs.length == 0) {
+      MainDashboard.create(req.body, function (err, mainDashboard) {
+        if (err) { return handleError(res, err); }
+        return res.status(201).json(mainDashboard);
+      });
+    }else {
+      MainDashboard.findById(req.body.regKey, function (err, mainDashboard) {
+        if (err) { return handleError(res, err); }
+        if (!mainDashboard) { return res.status(404).end(); }
+
+        var updated = _.merge(mainDashboard, req.body);
+        updated.save(function (err) {
+          if (err) { return handleError(res, err); }
+          return res.status(200).json(mainDashboard);
+        });
+      });
+      //return res.status(201).json({regKey:docs[0]._id});
+    }
+
   });
 };
 
