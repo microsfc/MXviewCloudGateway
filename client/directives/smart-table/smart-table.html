@@ -2,9 +2,9 @@
   <thead>
     <tr>
       <th st-sort="sitename">Site Name</th>
-      <th st-sort="informationEvent">Information Event</th>
-      <th st-sort="criticalEvent">Critical Event</th>
-      <th st-sort="warningEvent">Warning Event</th>
+      <th st-sort="informationEvent">Information</th>
+      <th st-sort="criticalEvent">Critical</th>
+      <th st-sort="warningEvent">Warning</th>
     </tr>
     <tr>
       <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
@@ -16,11 +16,7 @@
       <td>{{row.informationEvent}}</td>
       <td>{{row.criticalEvent}}</td>
       <td>{{row.warningEvent}}</td>
-      <td>
-        <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
-          <i class="glyphicon glyphicon-remove-circle"></i>
-        </button>
-      </td>
+      <td><a href="#" ng-click=openMXview()><img src="assets/images/MXview_icon.png" height="20" width="20"></a></td>
     </tr>
   </tbody>
 </table>
