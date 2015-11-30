@@ -20,15 +20,20 @@ angular.module('mxviewCloud')
           draggable: false,
           icon: {
             type: 'awesomeMarker',
-            icon: 'home',
-            markerColor: 'red'
+            markerColor: 'blue'
           },
         },
       },
-      defaultIcon: {},
-      awesomeMarkerIcon: {
+      blueIcon: {
         type: 'awesomeMarker',
-        icon: 'tag',
+        markerColor: 'blue'
+      },
+      yellowIcon: {
+        type: 'awesomeMarker',
+        markerColor: 'yellow'
+      },
+      redIcon: {
+        type: 'awesomeMarker',
         markerColor: 'red'
       }
     });
@@ -40,4 +45,14 @@ angular.module('mxviewCloud')
     Socket.on('user connected', function(msg){
       $scope.promo = msg;
     });
+
+    $scope.changeBlue = function() {
+      $scope.mapMarkers.taipeiMarker.icon=$scope.blueIcon;
+    };
+    $scope.changeYellow = function() {
+      $scope.mapMarkers.taipeiMarker.icon=$scope.yellowIcon;
+    };
+    $scope.changeRed = function() {
+      $scope.mapMarkers.taipeiMarker.icon=$scope.redIcon;
+    };
   });
