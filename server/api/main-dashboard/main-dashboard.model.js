@@ -8,7 +8,9 @@ var MainDashboardSchema = new Schema({
   regKey: String,
   deviceNormal: String,
   deviceWarning: String,
-  deviceCritical: String
+  deviceCritical: String,
+  lat:String,
+  lng:String
 });
 
 MainDashboardSchema.plugin(autoIncrement.plugin, 'MainDashboard');

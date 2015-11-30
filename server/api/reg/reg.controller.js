@@ -46,10 +46,11 @@ exports.create = function (req, res) {
     if(docs.length == 0) {
       Reg.create(req.body, function (err, reg) {
         if (err) { return handleError(res, err); }
-        return res.status(201).json({regKey:reg._id});
+        //return res.status(201).json({regKey:reg._id});
+        return res.status(201).json(reg);
       });
     }else {
-      return res.status(201).json({regKey:docs[0]._id});
+      return res.status(201).json(docs[0]);
     }
 
   });

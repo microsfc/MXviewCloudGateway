@@ -17,6 +17,8 @@ var topicObj = new mqTopic();
 
 var SEVERITY_TAG = 'Severity';
 var mxviewRegKey = '';
+var mxviewlat = '';
+var mxviewlng = '';
 
 module.exports = new web_api();
 
@@ -85,13 +87,13 @@ web_api.prototype.subscribeMQTT = subscribeMQTT;
              "regKey": mxviewRegKey,
              "deviceNormal": information_count,
              "deviceWarning": warning_count,
-             "deviceCritical": critical_count
+             "deviceCritical": critical_count,
+             "lat":mxviewlat,
+             "lng":mxviewlng
            };
 
            http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getNetworkStatusURL(), 'POST', '', JSON.stringify(dashboard_data), getNetworkStatusResult);
          }
-
-
 
         });
       }
@@ -194,6 +196,9 @@ function process_trigger_deviceSummary_data(device_summary_data, count) {
           var obj = JSON.parse(result);
           console.log('id=' +obj.regKey);
           mxviewRegKey =  obj.regKey;
+          mxviewlat = obj.lat;
+          mxviewlng = obj.lng;
+
           getdevice_summary(config.mxview_server_ip);
           getlink_summary(config.mxview_server_ip);
 
@@ -208,7 +213,9 @@ function process_trigger_deviceSummary_data(device_summary_data, count) {
 
               var register_data = {
                 "serverName": "MXview 1",
-                "license": result.License.Item[0][License_Tag]
+                "license": result.License.Item[0][License_Tag],
+                "lat":'24.984095',
+                "lng":'121.551983'
               };
 
               var dataString = JSON.stringify(register_data);
@@ -259,7 +266,9 @@ function process_trigger_deviceSummary_data(device_summary_data, count) {
                           "regKey": mxviewRegKey,
                           'critical_count':critical_count,
                           'warning_count':warning_count,
-                          'information_count':information_count
+                          'information_count':information_count,
+                          'lat': mxviewlat,
+                          'lng': mxviewlng
                         };
 
                         mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));

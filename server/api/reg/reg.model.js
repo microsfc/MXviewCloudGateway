@@ -8,7 +8,9 @@ autoIncrement.initialize(mongoose);
 
 var RegSchema = new Schema({
   serverName: String,
-  license:String
+  license:String,
+  lat:String,
+  lng:String
 });
 
 RegSchema.plugin(autoIncrement.plugin, 'Reg');

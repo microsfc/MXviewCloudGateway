@@ -31,7 +31,9 @@ module.exports =  {
             'serverName' :mxview_RegisterData[i]['serverName'],
             'deviceNormal' :mxview_eventCountData[i]['deviceNormal'],
             'deviceWarning' :mxview_eventCountData[i]['deviceWarning'],
-            'deviceCritical' :mxview_eventCountData[i]['deviceCritical']
+            'deviceCritical' :mxview_eventCountData[i]['deviceCritical'],
+            'lat':mxview_eventCountData[i]['lat'],
+            'lng':mxview_eventCountData[i]['lng']
           };
 
           var one_data = {
