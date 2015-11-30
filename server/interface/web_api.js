@@ -194,8 +194,8 @@ function process_trigger_deviceSummary_data(device_summary_data, count) {
         function get_register_result(result) {
           console.log('register result =' + result);
           var obj = JSON.parse(result);
-          console.log('id=' +obj.regKey);
-          mxviewRegKey =  obj.regKey;
+          console.log('id=' +obj._id);
+          mxviewRegKey =  obj._id;
           mxviewlat = obj.lat;
           mxviewlng = obj.lng;
 
