@@ -3,17 +3,12 @@
  */
 
 module.exports = {
-        overrides: {
-          "bootstrap":{
-           "main": [
-              "dist/css/bootstrap.min.css",
-              "dist/js/bootstrap.js"
-            ]
-          },
-          "font-awesome":{
-            "main": [
-              "css/font-awesome.min.css"
-            ]
-          }
-        }
-      };
+  overrides: {
+    "bootstrap":{
+       "main": [
+          "dist/css/bootstrap.min.css",
+          "dist/js/bootstrap.js"
+        ]
+      }
+    }
+  };

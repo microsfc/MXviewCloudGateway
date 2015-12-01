@@ -13,7 +13,6 @@
     "angular-socket-io": "^0.7.0",
     "bootstrap": "~3.3.6",
     "bootstrap-sass": "~3.3.5",
-    "font-awesome": "~4.5.0",
     "leaflet": "~0.7.3",
     "Leaflet.awesome-markers": "~2.0.2"
   },
