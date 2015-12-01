@@ -77,13 +77,10 @@ angular.module('mxviewCloud')
           },
         };
         if (collection[i].criticalEvent > 0) {
-          $scope.markers['marker_' + i].message = 'Critical';
           $scope.markers['marker_' + i].icon = $scope.redIcon;
         } else if (collection[i].warningEvent > 0) {
-          $scope.markers['marker_' + i].message = 'Warning';
           $scope.markers['marker_' + i].icon = $scope.yellowIcon;
         } else {
-          $scope.markers['marker_' + i].message = '';
           $scope.markers['marker_' + i].icon = $scope.blueIcon;
         }
         console.log('markers = ', $scope.markers);
