@@ -37,7 +37,7 @@ angular.module('mxviewCloud')
     });
 
     $scope.openMXview = function() {
-      $window.open('http://10.1.0.5','_blank');
+      $window.open('http://10.1.0.5:8080','_blank');
     };
 
     angular.extend($scope, {
