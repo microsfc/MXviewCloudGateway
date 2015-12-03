@@ -51,6 +51,19 @@ exports.create = function (req, res) {
       });
     }else {
       MainDashboard.findById(req.body.regKey, function (err, mainDashboard) {
+          if(err) return handleError(err);
+          mainDashboard.deviceNormal = req.body.deviceNormal;
+          mainDashboard.deviceWarning = req.body.deviceWarning;
+          mainDashboard.deviceCritical = req.body.deviceCritical;
+
+          mainDashboard.save(function (err) {
+            if (err) { return handleError(res, err); }
+            res.send(mainDashboard);
+            //return res.status(200).json(mainDashboard);
+          });
+      });
+
+      /*MainDashboard.findById(req.body.regKey, function (err, mainDashboard) {
         if (err) { return handleError(res, err); }
         if (!mainDashboard) { return res.status(404).end(); }
 
@@ -59,7 +72,8 @@ exports.create = function (req, res) {
           if (err) { return handleError(res, err); }
           return res.status(200).json(mainDashboard);
         });
-      });
+      });*/
+
       //return res.status(201).json({regKey:docs[0]._id});
     }
 
