@@ -20,6 +20,7 @@ angular.module('mxviewCloud')
 
     Socket.on('mxviewcloud dashbaord', function(msg) {
       console.log('mxviewcloud dashbaord = ', msg);
+      $scope.collection = [];
       for(var i = 0; i<msg.length; i++){
         var site_data = {
           id: msg[i].dashboard_data._id,
