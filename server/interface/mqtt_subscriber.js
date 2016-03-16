@@ -1,7 +1,6 @@
 
 module.exports = function(broker_ip, socket){
 
-    var module = {};
     var mqtt    = require('mqtt');
 
     var client  = mqtt.connect('mqtt://' + broker_ip); //192.168.127.68'
@@ -40,19 +39,19 @@ module.exports = function(broker_ip, socket){
       //client.end();
     } );
 
-    module.subscribe = function(topic) {
-      //client.subscribe(topic);
-      g_topic = topic;
-    };
-
     socket.on('disconnect', function () {
       console.log('[%s] %s disconnected.', new Date().toUTCString(), socket.ip);
       socket_io_connection_flag = 0;
     });
 
     socket.on('connection', function(socket) {
-        socket_io_connection_flag  = 1;
+      socket_io_connection_flag  = 1;
     });
 
-    return module;
+    return {
+      subscribe: function(topic) {
+        g_topic = topic;
+      }
+    };
+
 }

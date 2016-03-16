@@ -70,8 +70,8 @@ module.exports =  {
 
           var http = require('http');
           var Agent = require('agentkeepalive');
-          var xmlParser = require('xml2js').parseString;
-          var xmlStart_String = "Trigger_Detail";
+          var xmlStart_String = "<Trigger_Detail>";
+          var xmlEnd_String = "</Trigger_Detail>"
 
           var keepaliveAgent = new Agent({
             maxSocket: 100,
@@ -96,14 +96,8 @@ module.exports =  {
             res.on('data', function(chunk) {
               //console.log('BODY: ' + chunk);
               //chunk.setEncoding('utf8');
-              if(chunk.indexOf(xmlStart_String) > -1) {
+              if((chunk.indexOf(xmlStart_String) != -1) && (chunk.indexOf(xmlEnd_String) != -1) ) {
                 callback(chunk);
-                /*console.log('json result');
-                xmlParser(chunk, function(err, result) {
-                  console.log(JSON.stringify(result));
-                  console.log('Done');
-                  callback(JSON.stringify(result));
-                });*/
               }
             });
           });

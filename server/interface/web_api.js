@@ -3,6 +3,7 @@ var mxview_web_url =  require('./web_api_url.js');
 var config = require('./../config/environment');
 var mqTopic = require('./mqTopic.js');
 var xmlParser = require('xml2js').parseString;
+var xmlTojson2Parser = require('xml2json');
 
 //var Client = require('node-rest-client').Client;
 //var client = new Client();
@@ -26,6 +27,8 @@ web_api.prototype.register_MXviewData = register_MXviewData;
 web_api.prototype.getlink_summary = getlink_summary;
 web_api.prototype.getdevice_summary = getdevice_summary;
 web_api.prototype.subscribeMQTT = subscribeMQTT;
+
+var apn = require('apn');
 
   function web_api() {
 
@@ -222,112 +225,96 @@ function process_trigger_deviceSummary_data(device_summary_data, count) {
 
               function get_http_push_data(pushdata) {
 
-                var contain_index = pushdata.indexOf("<Trigger_Detail>");
-                var parsing_data = pushdata.substring(contain_index, pushdata.length);
-                xmlParser(parsing_data, function (err, result) {
-                  var push_data = result;
-                  //var event_type = 0;
-                  var critical_count = 0;
-                  var information_count = 0;
-                  var warning_count = 0;
+                var start_trigger_index = pushdata.indexOf("<Trigger");
+                var end_trigger_index = pushdata.indexOf("</Trigger");
+                console.log('parsing data1='+pushdata);
+                var parsing_data = pushdata.substring(start_trigger_index, end_trigger_index);
+                var json = xmlTojson2Parser.toJson(parsing_data); //returns a string containing the JSON structure by default
+                console.log('json result='+json);
+                mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), json);
 
-                  if(!isEmpty(push_data)){
+                /*try {
 
-                    if(!isEmpty(push_data['Trigger_Detail'])) {
-                      if(isEmpty(push_data['Trigger_Detail']['Severity'])) {
-                        console.log('not find dashboard trigger data')
-                      }else {
+                  xmlParser(parsing_data, function (err, result) {
+                    var push_data = result;
+                    //var event_type = 0;
+                    var critical_count = 0;
+                    var information_count = 0;
+                    var warning_count = 0;
 
-                        if(!isEmpty(push_data['Trigger_Detail']['Severity'])) {
-                          for(var j=0; j<push_data['Trigger_Detail']['Severity'].length; j++){
+                    if(err) {
+                      throw err;
+                    }else {
+                      if(!isEmpty(push_data)){
 
-                            if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Device'])
-                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Device'])
-                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Device'])
-                            ) {
-                              process_trigger_deviceSummary_data(push_data['Trigger_Detail']['Severity'], j);
+                        if(!isEmpty(push_data['Trigger_Detail'])) {
+                          if(isEmpty(push_data['Trigger_Detail']['Severity'])) {
+                            console.log('parsing data='+parsing_data);
+                          }else {
+
+                            if(!isEmpty(push_data['Trigger_Detail']['Severity'])) {
+                              for(var j=0; j<push_data['Trigger_Detail']['Severity'].length; j++){
+
+                                if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Device'])
+                                  || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Device'])
+                                  || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Device'])
+                                ) {
+                                  process_trigger_deviceSummary_data(push_data['Trigger_Detail']['Severity'], j);
+                                }
+
+                                if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Link'])
+                                  || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Link'])
+                                  || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Link'])
+                                ) {
+                                  process_trigger_linkSummary_data(push_data['Trigger_Detail']['Severity'], j);
+                                }
+
+                              }
                             }
 
-                            if(!isEmpty(push_data['Trigger_Detail']['Severity'][j]['Critical']['0']['Link'])
-                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Warning']['0']['Link'])
-                              || !isEmpty(push_data['Trigger_Detail']['Severity'][j]['Information']['0']['Link'])
-                            ) {
-                              process_trigger_linkSummary_data(push_data['Trigger_Detail']['Severity'], j);
-                            }
+                            critical_count = device_critical_count + link_critical_count;
+                            warning_count = device_warning_count + link_warning_count;
+                            information_count = device_information_count + link_information_count;
+                            /*if(critical_count > 0) {
+                             var notify = new apn.Notification();
+                             notify.device = new apn.Device("2ed782cae33636f3308d23400a9aad7015b90bacbd7ad8cc11addb892f71ab6c"); // ""裡面放欲推撥裝置的token
+                             notify.badge = 1;     // App icon上面的數字badge
+                             notify.alert = "port link down";    // 推撥顯示文字
+                             new apn.Connection({
+                             cert:'APNS.crt.pem',
+                             key:'APNS.key.pem',
+                             production:true,
+                             connectionTimeout: 10000,
+                             gateway: 'gateway.push.apple.com', //'gateway.push.apple.com'//'gateway.sandbox.push.apple.com'
+                             }).pushNotification(notify, notify.device);
+                             }*/
+
+                            /*var dynamic_dashbaord_data = {
+                              "regKey": mxviewRegKey,
+                              'critical_count':critical_count,
+                              'warning_count':warning_count,
+                              'information_count':information_count,
+                              'lat': mxviewlat,
+                              'lng': mxviewlng
+                            };
+
+                            mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
 
                           }
                         }
-
-                        critical_count = device_critical_count + link_critical_count;
-                        warning_count = device_warning_count + link_warning_count;
-                        information_count = device_information_count + link_information_count;
-
-                        var dynamic_dashbaord_data = {
-                          "regKey": mxviewRegKey,
-                          'critical_count':critical_count,
-                          'warning_count':warning_count,
-                          'information_count':information_count,
-                          'lat': mxviewlat,
-                          'lng': mxviewlng
-                        };
-
-                        mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
 
                       }
-                      /*if(isEmpty(push_data['Trigger_Detail']['Event'])) {
-                        console.log('not find dashboard trigger data')
-                      }else {
-
-                        for(var i=0; i<push_data.Trigger_Detail.Event.length; i++){
-
-                          for(var j=0; j<push_data.Trigger_Detail.Event[i].Severity.length; j++) {
-                            event_type =  push_data.Trigger_Detail.Event[i].Severity[j]; //push_data['Trigger_Detail']['Event']['0']['Severity'];
-                            switch (event_type) {
-                              case '0':
-                                information_count++;
-                                break;
-                              case '1':
-                                warning_count++;
-                                break;
-                              case '2':
-                                critical_count++;
-                                break;
-
-                            }
-                          }
-
-                        }
-
-                        var dynamic_dashbaord_data = {
-                          "regKey": mxviewRegKey,
-                          'critical_count':critical_count,
-                          'warning_count':warning_count,
-                          'information_count':information_count
-                        };
-
-                        mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), JSON.stringify(dynamic_dashbaord_data));
-
-                      }*/
                     }
 
-                  }
-                });
-
+                  });
+                }catch(ex) {
+                  //throw new Error('something bad happened');
+                  console.log(ex.msg);
+                }*/
                 //mqtt_client.publish(topicObj.getMXviewDashbaordTopic(), pushdata);
 
               }
-              //var args = {
-                //data:dataString,
-                //headers:{"Content-Type": "application/json"},
-              //};
 
-              //client.post(mxview_web_url.getReisterMXviewURL(), args, function(data, response) {
-              //client.post('http://127.0.0.1:3000/register', args, function(data, response) {
-                // parsed response body as js object
-                //console.log(data);
-                // raw response
-                //console.log(response);
-              //});
 
               http_module.httpRequest(config.mxview_cloud_server_ip, config.mxview_cloud_server_port, mxview_web_url.getReisterMXviewURL(), 'POST', '', dataString, get_register_result);
 

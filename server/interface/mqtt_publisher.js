@@ -1,7 +1,7 @@
 
-module.exports = function(broker_ip){
+module.exports = function(broker_ip) {
 
-    var module = {};
+    //var module = {};
     var mqtt    = require('mqtt');
 
     var client  = mqtt.connect('mqtt://' + broker_ip); //192.168.127.68'
@@ -31,14 +31,15 @@ module.exports = function(broker_ip){
         console.log('mqtt client occurs error');
     });
 
-    module.publish = function(topic, message) {
+    return {
+      publish:function(topic, message) {
         g_topic = topic;
         g_message = message;
 
-       if(connected) {
-         client.publish(g_topic, g_message);
-       }
+        if(connected) {
+          client.publish(g_topic, g_message);
+        }
+      }
     };
 
-    return module;
 }

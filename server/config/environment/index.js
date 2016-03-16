@@ -5,9 +5,10 @@ var _ = require('lodash');
 
 var all = {
 
-  env: process.env.NODE_ENV || 'development',
+  env: process.env.NODE_ENV || 'production',
   root: path.normalize(__dirname + '/../../..'),
   port: process.env.PORT || 8080,
+
 
   mongo: {
     options: {
@@ -29,7 +30,7 @@ var all = {
 
   mqtt_broker_ip: '10.1.0.7', //'ec2-52-3-105-64.compute-1.amazonaws.com',
 
-  mxview_cloud_server_ip: 'ec2-52-3-105-64.compute-1.amazonaws.com', //'ec2-52-3-105-64.compute-1.amazonaws.com', //'ec2-52-3-105-64.compute-1.amazonaws.com', //'localhost', //'192.168.2.21',
+  mxview_cloud_server_ip: '10.1.0.7', //'ec2-52-3-105-64.compute-1.amazonaws.com', //'ec2-52-3-105-64.compute-1.amazonaws.com', //'localhost', //'192.168.2.21',
 
   mxview_cloud_server_port: 8080
 };
